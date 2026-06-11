@@ -254,14 +254,11 @@ export default function ListingsPage() {
 
   const handleApprove = async (id: string, title: string) => {
     setApprovingIds((prev) => new Set(prev).add(id));
-    // Optimistic removal
-    setPendingListings((prev) => prev.filter((l) => l.id !== id));
     try {
       await api.post(`/admin/listings/${id}/approve`);
+      setPendingListings((prev) => prev.filter((l) => l.id !== id));
       addToast(`"${title}" approved successfully.`, "success");
     } catch {
-      // Revert optimistic removal
-      fetchPending();
       addToast(`Failed to approve "${title}".`, "error");
     } finally {
       setApprovingIds((prev) => {
@@ -274,13 +271,11 @@ export default function ListingsPage() {
 
   const handleReject = async (id: string, title: string) => {
     setRejectingIds((prev) => new Set(prev).add(id));
-    // Optimistic removal
-    setPendingListings((prev) => prev.filter((l) => l.id !== id));
     try {
       await api.post(`/admin/listings/${id}/reject`);
+      setPendingListings((prev) => prev.filter((l) => l.id !== id));
       addToast(`"${title}" rejected.`, "success");
     } catch {
-      fetchPending();
       addToast(`Failed to reject "${title}".`, "error");
     } finally {
       setRejectingIds((prev) => {
