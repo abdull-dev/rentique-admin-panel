@@ -3,6 +3,10 @@
 import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import api from "@/lib/api";
+import Spinner from "@/components/spinner";
+import { ToastContainer, useToasts } from "@/components/toast";
+import { formatPKR } from "@/lib/format";
+import { errorMessage } from "@/lib/errors";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -58,13 +62,6 @@ interface PaginatedResponse {
 // Helpers
 // ---------------------------------------------------------------------------
 
-function formatPrice(value: number | string | undefined): string {
-  if (value === undefined || value === null) return "N/A";
-  const num = typeof value === "string" ? parseFloat(value) : value;
-  if (isNaN(num)) return "N/A";
-  return `$${num.toFixed(2)}`;
-}
-
 function formatDate(dateStr?: string): string {
   if (!dateStr) return "N/A";
   const d = new Date(dateStr);
@@ -95,76 +92,6 @@ function statusLabel(status: string): string {
 }
 
 // ---------------------------------------------------------------------------
-// Toast component
-// ---------------------------------------------------------------------------
-
-interface Toast {
-  id: number;
-  message: string;
-  type: "success" | "error";
-}
-
-let toastId = 0;
-
-function ToastContainer({
-  toasts,
-  onDismiss,
-}: {
-  toasts: Toast[];
-  onDismiss: (id: number) => void;
-}) {
-  return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-2">
-      {toasts.map((t) => (
-        <div
-          key={t.id}
-          className={`flex items-center gap-2 rounded-lg px-4 py-3 text-sm font-medium text-white shadow-lg transition-all ${
-            t.type === "success" ? "bg-green-600" : "bg-red-600"
-          }`}
-        >
-          <span>{t.message}</span>
-          <button
-            onClick={() => onDismiss(t.id)}
-            className="ml-2 text-white/80 hover:text-white"
-          >
-            &times;
-          </button>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-// ---------------------------------------------------------------------------
-// Spinner
-// ---------------------------------------------------------------------------
-
-function Spinner({ className = "h-4 w-4" }: { className?: string }) {
-  return (
-    <svg
-      className={`animate-spin ${className}`}
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-    >
-      <circle
-        className="opacity-25"
-        cx="12"
-        cy="12"
-        r="10"
-        stroke="currentColor"
-        strokeWidth="4"
-      />
-      <path
-        className="opacity-75"
-        fill="currentColor"
-        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
-      />
-    </svg>
-  );
-}
-
-// ---------------------------------------------------------------------------
 // Main page
 // ---------------------------------------------------------------------------
 
@@ -191,19 +118,7 @@ export default function ListingsPage() {
   const [rejectingIds, setRejectingIds] = useState<Set<string>>(new Set());
 
   // Toasts
-  const [toasts, setToasts] = useState<Toast[]>([]);
-
-  const addToast = useCallback((message: string, type: "success" | "error") => {
-    const id = ++toastId;
-    setToasts((prev) => [...prev, { id, message, type }]);
-    setTimeout(() => {
-      setToasts((prev) => prev.filter((t) => t.id !== id));
-    }, 3000);
-  }, []);
-
-  const dismissToast = useCallback((id: number) => {
-    setToasts((prev) => prev.filter((t) => t.id !== id));
-  }, []);
+  const { toasts, addToast, dismissToast } = useToasts();
 
   // -----------------------------------------------------------------------
   // Data fetching
@@ -258,8 +173,8 @@ export default function ListingsPage() {
       await api.post(`/admin/listings/${id}/approve`);
       setPendingListings((prev) => prev.filter((l) => l.id !== id));
       addToast(`"${title}" approved successfully.`, "success");
-    } catch {
-      addToast(`Failed to approve "${title}".`, "error");
+    } catch (err) {
+      addToast(errorMessage(err, `Failed to approve "${title}".`), "error");
     } finally {
       setApprovingIds((prev) => {
         const next = new Set(prev);
@@ -275,8 +190,8 @@ export default function ListingsPage() {
       await api.post(`/admin/listings/${id}/reject`);
       setPendingListings((prev) => prev.filter((l) => l.id !== id));
       addToast(`"${title}" rejected.`, "success");
-    } catch {
-      addToast(`Failed to reject "${title}".`, "error");
+    } catch (err) {
+      addToast(errorMessage(err, `Failed to reject "${title}".`), "error");
     } finally {
       setRejectingIds((prev) => {
         const next = new Set(prev);
@@ -526,7 +441,7 @@ function PendingCard({
             {listing.title}
           </h3>
           <span className="shrink-0 text-base font-bold text-indigo-600">
-            {formatPrice(listing.rentalPrice)}
+            {formatPKR(listing.rentalPrice)}
           </span>
         </div>
 
@@ -743,7 +658,7 @@ function AllListingsTab({
                     </td>
                     {/* Price */}
                     <td className="whitespace-nowrap px-4 py-3 text-sm font-medium text-gray-900">
-                      {formatPrice(listing.rentalPrice)}
+                      {formatPKR(listing.rentalPrice)}
                     </td>
                     {/* Status */}
                     <td className="whitespace-nowrap px-4 py-3">

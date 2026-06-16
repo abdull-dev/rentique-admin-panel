@@ -79,6 +79,18 @@ export enum ListingColorRole {
   ACCENT = "ACCENT",
 }
 
+export enum PayoutAccountType {
+  BANK = "BANK",
+  JAZZCASH = "JAZZCASH",
+  EASYPAISA = "EASYPAISA",
+}
+
+export enum PayoutAccountStatus {
+  UNVERIFIED = "UNVERIFIED",
+  VERIFIED = "VERIFIED",
+  REJECTED = "REJECTED",
+}
+
 // ─── Interfaces ───────────────────────────────────────────────────────────────
 
 export interface Profile {
@@ -162,4 +174,47 @@ export interface PaginatedResponse<T> {
   page: number;
   limit: number;
   total: number;
+}
+
+// ─── Payouts ──────────────────────────────────────────────────────────────────
+
+/** Minimal owner fields surfaced in admin payout views. */
+export interface PayoutOwner {
+  id: string;
+  name: string | null;
+  fullName: string | null;
+  email: string | null;
+  ownerType: OwnerType | null;
+}
+
+/** An owner's payout destination (admin sees it unmasked to verify/transfer). */
+export interface PayoutAccount {
+  id: string;
+  userId: string;
+  type: PayoutAccountType;
+  accountTitle: string;
+  iban: string | null;
+  bankName: string | null;
+  walletPhone: string | null;
+  cnic: string | null;
+  status: PayoutAccountStatus;
+  verifiedAt: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+/** Row from `GET /admin/payout-accounts` — account joined with its owner. */
+export interface AdminPayoutAccount extends PayoutAccount {
+  user: PayoutOwner;
+}
+
+/** Row from `GET /admin/payouts/owed` — one owner's outstanding balance. */
+export interface OwedPayout {
+  owner: PayoutOwner;
+  payoutAccount: PayoutAccount | null;
+  // Decimals are serialised as strings over JSON.
+  totalAmount: string;
+  payoutCount: number;
+  payoutIds: string[];
+  payable: boolean;
 }
