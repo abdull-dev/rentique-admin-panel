@@ -218,3 +218,18 @@ export interface OwedPayout {
   payoutIds: string[];
   payable: boolean;
 }
+
+/**
+ * Row from `GET /admin/refunds/owed` — one renter's outstanding refund balance.
+ * The renter-side mirror of {@link OwedPayout}; renters reuse the same
+ * `PayoutAccount` model as their refund destination.
+ */
+export interface OwedRefund {
+  renter: PayoutOwner;
+  payoutAccount: PayoutAccount | null;
+  // Decimals are serialised as strings over JSON.
+  totalAmount: string;
+  refundCount: number;
+  refundIds: string[];
+  refundable: boolean;
+}
