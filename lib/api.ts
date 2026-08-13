@@ -1,9 +1,13 @@
 import axios from "axios";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+export const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+
+// All API calls go through Next.js /api/proxy/* so there are no CORS issues
+// regardless of where the admin panel is hosted.
+const PROXY_BASE = "/api/proxy";
 
 const api = axios.create({
-  baseURL: API_URL,
+  baseURL: PROXY_BASE,
   withCredentials: true,
 });
 
@@ -38,7 +42,7 @@ api.interceptors.response.use(
       isRefreshing = true;
 
       try {
-        await axios.post(`${API_URL}/auth/refresh`, {}, { withCredentials: true });
+        await axios.post(`${PROXY_BASE}/auth/refresh`, {}, { withCredentials: true });
         processQueue(null);
         return api(original);
       } catch (refreshErr) {

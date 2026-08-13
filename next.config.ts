@@ -1,10 +1,21 @@
 import type { NextConfig } from "next";
 
+const API_URL =
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "**" },
     ],
+  },
+  async rewrites() {
+    return [
+      {
+        source: "/api/proxy/:path*",
+        destination: `${API_URL}/:path*`,
+      },
+    ];
   },
 };
 
