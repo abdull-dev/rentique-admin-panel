@@ -11,97 +11,33 @@ interface StatCard {
   label: string;
   value: number | null;
   icon: React.ReactNode;
-  color: string;
+  topColor: string;
+  iconBg: string;
+  iconColor: string;
   href: string;
-}
-
-// ─── Skeleton helpers ─────────────────────────────────────────────────────────
-
-function StatSkeleton() {
-  return (
-    <div className="rounded-2xl border border-[#E8DDE4] bg-white p-6 shadow-[0_1px_3px_rgba(28,20,36,0.08)]">
-      <div className="flex items-center gap-4">
-        <div className="skeleton h-12 w-12 rounded-lg" />
-        <div className="flex-1">
-          <div className="skeleton mb-2 h-8 w-16" />
-          <div className="skeleton h-4 w-24" />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function TableSkeleton({ rows = 5 }: { rows?: number }) {
-  return (
-    <div className="space-y-3">
-      {Array.from({ length: rows }).map((_, i) => (
-        <div key={i} className="skeleton h-10 w-full" />
-      ))}
-    </div>
-  );
 }
 
 // ─── Icons ────────────────────────────────────────────────────────────────────
 
 const icons = {
   listings: (
-    <svg
-      className="h-6 w-6"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth={1.5}
-      stroke="currentColor"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M20.25 7.5l-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z"
-      />
+    <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
     </svg>
   ),
   pending: (
-    <svg
-      className="h-6 w-6"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth={1.5}
-      stroke="currentColor"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-      />
+    <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
     </svg>
   ),
   bookings: (
-    <svg
-      className="h-6 w-6"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth={1.5}
-      stroke="currentColor"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"
-      />
+    <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
     </svg>
   ),
   disputed: (
-    <svg
-      className="h-6 w-6"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth={1.5}
-      stroke="currentColor"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z"
-      />
+    <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
     </svg>
   ),
 };
@@ -114,63 +50,54 @@ export default function DashboardPage() {
       label: "Total Listings",
       value: null,
       icon: icons.listings,
-      color: "bg-[#FCE3ED] text-[#D6336C]",
+      topColor: "#D6336C",
+      iconBg: "#FCE3ED",
+      iconColor: "#D6336C",
       href: "/listings",
     },
     {
       label: "Pending Review",
       value: null,
       icon: icons.pending,
-      color: "bg-[#FFF0D4] text-[#DE8E0F]",
+      topColor: "#DE8E0F",
+      iconBg: "#FFF0D4",
+      iconColor: "#DE8E0F",
       href: "/listings",
     },
     {
       label: "Total Bookings",
       value: null,
       icon: icons.bookings,
-      color: "bg-[#DEF2E9] text-[#0E8F6B]",
+      topColor: "#4A2E57",
+      iconBg: "#EAE1EE",
+      iconColor: "#4A2E57",
       href: "/bookings",
     },
     {
-      label: "Disputed Bookings",
+      label: "Disputed",
       value: null,
       icon: icons.disputed,
-      color: "bg-red-50 text-red-600",
+      topColor: "#B71F56",
+      iconBg: "#FCE3ED",
+      iconColor: "#B71F56",
       href: "/bookings",
     },
   ]);
 
-  const [pendingListings, setPendingListings] = useState<Listing[] | null>(
-    null,
-  );
-  const [disputedBookings, setDisputedBookings] = useState<Booking[] | null>(
-    null,
-  );
+  const [pendingListings, setPendingListings] = useState<Listing[] | null>(null);
+  const [disputedBookings, setDisputedBookings] = useState<Booking[] | null>(null);
 
   useEffect(() => {
-    // Fetch all stats in parallel.
     Promise.allSettled([
-      api.get<PaginatedResponse<Listing>>("/listings", {
-        params: { limit: 1 },
-      }),
+      api.get<PaginatedResponse<Listing>>("/listings", { params: { limit: 1 } }),
       api.get<Listing[]>("/admin/listings/pending"),
-      api.get<PaginatedResponse<Booking>>("/admin/bookings", {
-        params: { limit: 1 },
-      }),
-      api.get<PaginatedResponse<Booking>>("/admin/bookings", {
-        params: { status: "DISPUTED", limit: 1 },
-      }),
+      api.get<PaginatedResponse<Booking>>("/admin/bookings", { params: { limit: 1 } }),
+      api.get<PaginatedResponse<Booking>>("/admin/bookings", { params: { status: "DISPUTED", limit: 1 } }),
     ]).then(([listingsRes, pendingRes, bookingsRes, disputedRes]) => {
-      const totalListings =
-        listingsRes.status === "fulfilled" ? listingsRes.value.data.total : 0;
-      const pendingCount =
-        pendingRes.status === "fulfilled"
-          ? pendingRes.value.data.length
-          : 0;
-      const totalBookings =
-        bookingsRes.status === "fulfilled" ? bookingsRes.value.data.total : 0;
-      const disputedCount =
-        disputedRes.status === "fulfilled" ? disputedRes.value.data.total : 0;
+      const totalListings = listingsRes.status === "fulfilled" ? listingsRes.value.data.total : 0;
+      const pendingCount = pendingRes.status === "fulfilled" ? pendingRes.value.data.length : 0;
+      const totalBookings = bookingsRes.status === "fulfilled" ? bookingsRes.value.data.total : 0;
+      const disputedCount = disputedRes.status === "fulfilled" ? disputedRes.value.data.total : 0;
 
       setStats((prev) =>
         prev.map((card, i) => ({
@@ -179,20 +106,15 @@ export default function DashboardPage() {
         })),
       );
 
-      // Store pending listings for the table (first 5).
       if (pendingRes.status === "fulfilled") {
         setPendingListings(pendingRes.value.data.slice(0, 5));
       } else {
         setPendingListings([]);
       }
 
-      // Fetch disputed bookings for the table.
       if (disputedRes.status === "fulfilled") {
-        // We already have total; fetch the actual items separately.
         api
-          .get<PaginatedResponse<Booking>>("/admin/bookings", {
-            params: { status: "DISPUTED", limit: 5 },
-          })
+          .get<PaginatedResponse<Booking>>("/admin/bookings", { params: { status: "DISPUTED", limit: 5 } })
           .then((res) => setDisputedBookings(res.data.data))
           .catch(() => setDisputedBookings([]));
       } else {
@@ -203,206 +125,156 @@ export default function DashboardPage() {
 
   return (
     <div>
-      {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-[#1C1424] font-[family-name:var(--font-headline)]">Dashboard</h1>
-        <p className="mt-1 text-sm text-[#5B4F62]">
-          Overview of your rental marketplace
-        </p>
+      {/* Page header */}
+      <div className="page-header flex items-start justify-between">
+        <div>
+          <h1>Dashboard</h1>
+          <p>Overview of your rental marketplace</p>
+        </div>
+        <Link href="/listings" className="btn-primary text-sm">
+          Review listings
+        </Link>
       </div>
 
       {/* Stats grid */}
-      <div className="mb-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mb-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {stats.map((card) =>
           card.value === null ? (
-            <StatSkeleton key={card.label} />
+            <div key={card.label} className="stat-card" style={{ borderTopColor: card.topColor }}>
+              <div className="skeleton mb-3 h-8 w-20" />
+              <div className="skeleton h-4 w-28" />
+            </div>
           ) : (
             <Link
               key={card.label}
               href={card.href}
-              className="group rounded-2xl border border-[#E8DDE4] bg-white p-6 shadow-[0_1px_3px_rgba(28,20,36,0.08)] transition-shadow hover:shadow-md"
+              className="stat-card block transition-shadow hover:shadow-md"
+              style={{ borderTopColor: card.topColor }}
             >
-              <div className="flex items-center gap-4">
+              <div className="mb-3 flex items-center justify-between">
                 <div
-                  className={`flex h-12 w-12 items-center justify-center rounded-lg ${card.color}`}
+                  className="flex h-9 w-9 items-center justify-center rounded-lg"
+                  style={{ background: card.iconBg, color: card.iconColor }}
                 >
                   {card.icon}
                 </div>
-                <div>
-                  <p className="text-2xl font-bold text-[#1C1424]">
-                    {card.value.toLocaleString()}
-                  </p>
-                  <p className="text-sm text-[#5B4F62]">{card.label}</p>
-                </div>
               </div>
+              <p
+                className="text-3xl font-semibold leading-none"
+                style={{ fontFamily: "var(--font-mono)", color: "#1C1424" }}
+              >
+                {card.value.toLocaleString()}
+              </p>
+              <p className="mt-1.5 text-sm" style={{ color: "#8B7A97" }}>{card.label}</p>
             </Link>
           ),
         )}
       </div>
 
-      {/* Tables grid */}
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+      {/* Tables row */}
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         {/* Pending listings */}
-        <div className="rounded-2xl border border-[#E8DDE4] bg-white shadow-[0_1px_3px_rgba(28,20,36,0.08)]">
-          <div className="flex items-center justify-between border-b border-[#E8DDE4] px-6 py-4">
-            <h2 className="text-lg font-semibold text-[#1C1424]">
-              Pending Listings
-            </h2>
-            <Link
-              href="/listings"
-              className="text-sm font-medium text-[#D6336C] hover:text-[#B71F56]"
-            >
-              View all
+        <div className="admin-card">
+          <div className="flex items-center justify-between px-5 py-4" style={{ borderBottom: "1px solid #E8DDE4" }}>
+            <div>
+              <p className="font-semibold" style={{ color: "#1C1424" }}>Pending Review</p>
+              <p className="text-xs mt-0.5" style={{ color: "#8B7A97" }}>Listings awaiting approval</p>
+            </div>
+            <Link href="/listings" className="text-sm font-semibold" style={{ color: "#D6336C" }}>
+              View all →
             </Link>
           </div>
-          <div className="p-6">
-            {pendingListings === null ? (
-              <TableSkeleton />
-            ) : pendingListings.length === 0 ? (
-              <p className="py-8 text-center text-sm text-[#5B4F62]/60">
-                No pending listings
-              </p>
-            ) : (
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b border-[#E8DDE4] text-left text-[#5B4F62]">
-                    <th className="pb-3 font-medium">Title</th>
-                    <th className="pb-3 font-medium">Price</th>
-                    <th className="pb-3 font-medium">Date</th>
+          {pendingListings === null ? (
+            <div className="p-5 space-y-3">
+              {[1,2,3].map(i => <div key={i} className="skeleton h-10 w-full" />)}
+            </div>
+          ) : pendingListings.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-14 text-center">
+              <div className="mb-3 h-12 w-12 rounded-full flex items-center justify-center" style={{ background: "#DEF2E9" }}>
+                <svg className="h-6 w-6" style={{ color: "#0E8F6B" }} fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <p className="text-sm font-medium" style={{ color: "#1C1424" }}>All caught up</p>
+              <p className="text-xs mt-1" style={{ color: "#8B7A97" }}>No pending listings</p>
+            </div>
+          ) : (
+            <table className="admin-table">
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Price</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {pendingListings.map((listing) => (
+                  <tr key={listing.id}>
+                    <td className="font-medium" style={{ color: "#1C1424" }}>{listing.title}</td>
+                    <td style={{ fontFamily: "var(--font-mono)", fontSize: "13px" }}>
+                      Rs {Number(listing.rentalPrice).toLocaleString()}
+                    </td>
+                    <td style={{ color: "#8B7A97", fontSize: "13px" }}>
+                      {new Date(listing.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                  {pendingListings.map((listing, i) => (
-                    <tr
-                      key={listing.id}
-                      className={`${i % 2 === 1 ? "bg-[#faf4f0]" : ""} border-b border-[#E8DDE4]`}
-                    >
-                      <td className="py-3 font-medium text-[#1C1424]">
-                        {listing.title}
-                      </td>
-                      <td className="py-3 text-[#5B4F62]">
-                        Rs {Number(listing.rentalPrice).toLocaleString()}
-                      </td>
-                      <td className="py-3 text-[#5B4F62]/60">
-                        {new Date(listing.createdAt).toLocaleDateString()}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            )}
-          </div>
+                ))}
+              </tbody>
+            </table>
+          )}
         </div>
 
         {/* Disputed bookings */}
-        <div className="rounded-2xl border border-[#E8DDE4] bg-white shadow-[0_1px_3px_rgba(28,20,36,0.08)]">
-          <div className="flex items-center justify-between border-b border-[#E8DDE4] px-6 py-4">
-            <h2 className="text-lg font-semibold text-[#1C1424]">
-              Disputed Bookings
-            </h2>
-            <Link
-              href="/bookings"
-              className="text-sm font-medium text-[#D6336C] hover:text-[#B71F56]"
-            >
-              View all
+        <div className="admin-card">
+          <div className="flex items-center justify-between px-5 py-4" style={{ borderBottom: "1px solid #E8DDE4" }}>
+            <div>
+              <p className="font-semibold" style={{ color: "#1C1424" }}>Disputed Bookings</p>
+              <p className="text-xs mt-0.5" style={{ color: "#8B7A97" }}>Disputes requiring resolution</p>
+            </div>
+            <Link href="/bookings" className="text-sm font-semibold" style={{ color: "#D6336C" }}>
+              View all →
             </Link>
           </div>
-          <div className="p-6">
-            {disputedBookings === null ? (
-              <TableSkeleton />
-            ) : disputedBookings.length === 0 ? (
-              <p className="py-8 text-center text-sm text-[#5B4F62]/60">
-                No disputed bookings
-              </p>
-            ) : (
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b border-[#E8DDE4] text-left text-[#5B4F62]">
-                    <th className="pb-3 font-medium">Listing</th>
-                    <th className="pb-3 font-medium">Amount</th>
-                    <th className="pb-3 font-medium">Date</th>
+          {disputedBookings === null ? (
+            <div className="p-5 space-y-3">
+              {[1,2,3].map(i => <div key={i} className="skeleton h-10 w-full" />)}
+            </div>
+          ) : disputedBookings.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-14 text-center">
+              <div className="mb-3 h-12 w-12 rounded-full flex items-center justify-center" style={{ background: "#DEF2E9" }}>
+                <svg className="h-6 w-6" style={{ color: "#0E8F6B" }} fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <p className="text-sm font-medium" style={{ color: "#1C1424" }}>No disputes</p>
+              <p className="text-xs mt-1" style={{ color: "#8B7A97" }}>All bookings are healthy</p>
+            </div>
+          ) : (
+            <table className="admin-table">
+              <thead>
+                <tr>
+                  <th>Listing</th>
+                  <th>Amount</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {disputedBookings.map((booking) => (
+                  <tr key={booking.id}>
+                    <td className="font-medium" style={{ color: "#1C1424" }}>
+                      {booking.listing?.title ?? booking.listingId.slice(0, 8)}
+                    </td>
+                    <td style={{ fontFamily: "var(--font-mono)", fontSize: "13px" }}>
+                      Rs {Number(booking.rentalAmount).toLocaleString()}
+                    </td>
+                    <td style={{ color: "#8B7A97", fontSize: "13px" }}>
+                      {new Date(booking.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                  {disputedBookings.map((booking, i) => (
-                    <tr
-                      key={booking.id}
-                      className={`${i % 2 === 1 ? "bg-[#faf4f0]" : ""} border-b border-[#E8DDE4]`}
-                    >
-                      <td className="py-3 font-medium text-[#1C1424]">
-                        {booking.listing?.title ?? booking.listingId.slice(0, 8)}
-                      </td>
-                      <td className="py-3 text-[#5B4F62]">
-                        Rs {Number(booking.rentalAmount).toLocaleString()}
-                      </td>
-                      <td className="py-3 text-[#5B4F62]/60">
-                        {new Date(booking.createdAt).toLocaleDateString()}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* Quick actions */}
-      <div className="mt-8">
-        <h2 className="mb-4 text-lg font-semibold text-[#1C1424]">
-          Quick Actions
-        </h2>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-          <Link
-            href="/listings"
-            className="rounded-2xl border border-[#E8DDE4] bg-white p-5 shadow-[0_1px_3px_rgba(28,20,36,0.08)] transition-shadow hover:shadow-md"
-          >
-            <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-[#FCE3ED] text-[#D6336C]">
-              {icons.listings}
-            </div>
-            <h3 className="font-semibold text-[#1C1424]">Manage Listings</h3>
-            <p className="mt-1 text-sm text-[#5B4F62]">
-              Review, approve, or reject listings
-            </p>
-          </Link>
-
-          <Link
-            href="/bookings"
-            className="rounded-2xl border border-[#E8DDE4] bg-white p-5 shadow-[0_1px_3px_rgba(28,20,36,0.08)] transition-shadow hover:shadow-md"
-          >
-            <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-[#DEF2E9] text-[#0E8F6B]">
-              {icons.bookings}
-            </div>
-            <h3 className="font-semibold text-[#1C1424]">Manage Bookings</h3>
-            <p className="mt-1 text-sm text-[#5B4F62]">
-              View all bookings and resolve disputes
-            </p>
-          </Link>
-
-          <Link
-            href="/users"
-            className="rounded-2xl border border-[#E8DDE4] bg-white p-5 shadow-[0_1px_3px_rgba(28,20,36,0.08)] transition-shadow hover:shadow-md"
-          >
-            <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-[#EAE1EE] text-[#4A2E57]">
-              <svg
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z"
-                />
-              </svg>
-            </div>
-            <h3 className="font-semibold text-[#1C1424]">Manage Users</h3>
-            <p className="mt-1 text-sm text-[#5B4F62]">
-              View user profiles and manage roles
-            </p>
-          </Link>
+                ))}
+              </tbody>
+            </table>
+          )}
         </div>
       </div>
     </div>

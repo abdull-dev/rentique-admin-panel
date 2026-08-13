@@ -61,16 +61,34 @@ export function ToastContainer({
       {toasts.map((t) => (
         <div
           key={t.id}
-          className={`flex items-center gap-2 rounded-lg px-4 py-3 text-sm font-medium text-white shadow-lg transition-all ${
-            t.type === "success" ? "bg-[#0E8F6B]" : "bg-[#D6336C]"
-          }`}
+          className="flex items-center gap-3 px-4 py-3 text-sm font-semibold text-white shadow-lg"
+          style={{
+            background: t.type === "success" ? "#0E8F6B" : "#D6336C",
+            borderRadius: "999px",
+            minWidth: "240px",
+            maxWidth: "360px",
+            boxShadow: "0 4px 16px rgba(0,0,0,0.18)",
+          }}
         >
-          <span>{t.message}</span>
+          {/* Icon */}
+          {t.type === "success" ? (
+            <svg className="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+          ) : (
+            <svg className="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
+            </svg>
+          )}
+          <span className="flex-1 leading-snug">{t.message}</span>
           <button
             onClick={() => onDismiss(t.id)}
-            className="ml-2 text-white/80 hover:text-white"
+            className="ml-1 shrink-0 rounded-full p-0.5 transition-colors hover:bg-white/20"
+            aria-label="Dismiss"
           >
-            &times;
+            <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+            </svg>
           </button>
         </div>
       ))}

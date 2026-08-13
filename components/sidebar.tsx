@@ -2,174 +2,32 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import api, { API_URL } from "@/lib/api";
+import { API_URL } from "@/lib/api";
 
-const navItems = [
+const NAV = [
   {
-    label: "Dashboard",
-    href: "/",
-    icon: (
-      <svg
-        className="h-5 w-5"
-        fill="none"
-        viewBox="0 0 24 24"
-        strokeWidth={1.5}
-        stroke="currentColor"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25A2.25 2.25 0 0 1 13.5 18v-2.25Z"
-        />
-      </svg>
-    ),
+    group: "Overview",
+    items: [
+      { label: "Dashboard", href: "/", icon: "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" },
+      { label: "Seller Fees", href: "/seller-fees", icon: "M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" },
+    ],
   },
   {
-    label: "Seller Fees",
-    href: "/seller-fees",
-    icon: (
-      <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 0 0 3.75-.615A2.993 2.993 0 0 0 9.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 0 0 2.25 1.016c.896 0 1.7-.393 2.25-1.015a3.001 3.001 0 0 0 3.75.614m-16.5 0a3.004 3.004 0 0 1-.621-4.72l1.189-1.19A1.5 1.5 0 0 1 5.378 3h13.243a1.5 1.5 0 0 1 1.06.44l1.19 1.189a3 3 0 0 1-.621 4.72M6.75 18h3.75a.75.75 0 0 0 .75-.75V13.5a.75.75 0 0 0-.75-.75H6.75a.75.75 0 0 0-.75.75v3.75c0 .414.336.75.75.75Z" />
-      </svg>
-    ),
+    group: "Marketplace",
+    items: [
+      { label: "Listings", href: "/listings", icon: "M4 6h16M4 10h16M4 14h16M4 18h16" },
+      { label: "Bookings", href: "/bookings", icon: "M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" },
+      { label: "Users", href: "/users", icon: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" },
+      { label: "Taxonomy", href: "/taxonomy", icon: "M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" },
+    ],
   },
   {
-    label: "Listings",
-    href: "/listings",
-    icon: (
-      <svg
-        className="h-5 w-5"
-        fill="none"
-        viewBox="0 0 24 24"
-        strokeWidth={1.5}
-        stroke="currentColor"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M20.25 7.5l-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z"
-        />
-      </svg>
-    ),
-  },
-  {
-    label: "Bookings",
-    href: "/bookings",
-    icon: (
-      <svg
-        className="h-5 w-5"
-        fill="none"
-        viewBox="0 0 24 24"
-        strokeWidth={1.5}
-        stroke="currentColor"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"
-        />
-      </svg>
-    ),
-  },
-  {
-    label: "Payout Accounts",
-    href: "/payout-accounts",
-    icon: (
-      <svg
-        className="h-5 w-5"
-        fill="none"
-        viewBox="0 0 24 24"
-        strokeWidth={1.5}
-        stroke="currentColor"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z"
-        />
-      </svg>
-    ),
-  },
-  {
-    label: "Payouts",
-    href: "/payouts",
-    icon: (
-      <svg
-        className="h-5 w-5"
-        fill="none"
-        viewBox="0 0 24 24"
-        strokeWidth={1.5}
-        stroke="currentColor"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-        />
-      </svg>
-    ),
-  },
-  {
-    label: "Refunds",
-    href: "/refunds",
-    icon: (
-      <svg
-        className="h-5 w-5"
-        fill="none"
-        viewBox="0 0 24 24"
-        strokeWidth={1.5}
-        stroke="currentColor"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3"
-        />
-      </svg>
-    ),
-  },
-  {
-    label: "Users",
-    href: "/users",
-    icon: (
-      <svg
-        className="h-5 w-5"
-        fill="none"
-        viewBox="0 0 24 24"
-        strokeWidth={1.5}
-        stroke="currentColor"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z"
-        />
-      </svg>
-    ),
-  },
-  {
-    label: "Taxonomy",
-    href: "/taxonomy",
-    icon: (
-      <svg
-        className="h-5 w-5"
-        fill="none"
-        viewBox="0 0 24 24"
-        strokeWidth={1.5}
-        stroke="currentColor"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M9.568 3H5.25A2.25 2.25 0 0 0 3 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 0 0 5.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 0 0 9.568 3Z"
-        />
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M6 6h.008v.008H6V6Z"
-        />
-      </svg>
-    ),
+    group: "Finance",
+    items: [
+      { label: "Payout Accounts", href: "/payout-accounts", icon: "M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" },
+      { label: "Payouts", href: "/payouts", icon: "M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" },
+      { label: "Refunds", href: "/refunds", icon: "M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" },
+    ],
   },
 ];
 
@@ -178,70 +36,85 @@ export default function Sidebar() {
 
   const handleLogout = async () => {
     try {
-      await api.post("/auth/logout");
-    } catch {
-      // Ignore errors — we redirect regardless.
-    }
+      await fetch("/api/proxy/auth/logout", { method: "POST", credentials: "include" });
+    } catch { /* ignore */ }
     window.location.href = `${API_URL}/auth/google`;
   };
 
   return (
-    <aside className="fixed inset-y-0 left-0 z-30 flex w-64 flex-col bg-[#2D1B3D] text-white">
+    <aside
+      style={{ background: "#0F0A14", borderRight: "1px solid #1E1428" }}
+      className="fixed inset-y-0 left-0 z-30 flex w-60 flex-col"
+    >
       {/* Logo */}
-      <div className="flex h-16 items-center gap-2 border-b border-[#3D2550] px-6">
-        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#D6336C] text-sm font-bold">
-          R
+      <div className="flex h-[60px] items-center gap-3 px-5" style={{ borderBottom: "1px solid #1E1428" }}>
+        <div
+          className="flex h-8 w-8 items-center justify-center rounded-lg text-sm font-bold text-white"
+          style={{ background: "linear-gradient(135deg, #D6336C 0%, #B71F56 100%)" }}
+        >
+          D
         </div>
-        <span className="text-lg font-semibold tracking-tight">
-          Dresso.io Admin
-        </span>
+        <div>
+          <p className="text-sm font-semibold text-white" style={{ fontFamily: "var(--font-headline)", letterSpacing: "-0.01em" }}>
+            Dresso.io
+          </p>
+          <p className="text-[10px] font-medium" style={{ color: "#5B4F70", letterSpacing: "0.08em" }}>
+            ADMIN
+          </p>
+        </div>
       </div>
 
-      {/* Navigation */}
-      <nav className="flex-1 space-y-1 px-3 py-4">
-        {navItems.map((item) => {
-          const isActive =
-            item.href === "/"
-              ? pathname === "/"
-              : pathname.startsWith(item.href);
-
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
-                isActive
-                  ? "bg-[#D6336C]/15 text-[#FCE3ED]"
-                  : "text-[#C4A8D0] hover:bg-[#3D2550] hover:text-white"
-              }`}
+      {/* Nav */}
+      <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-5">
+        {NAV.map((group) => (
+          <div key={group.group}>
+            <p
+              className="mb-1.5 px-3 text-[10px] font-semibold uppercase tracking-widest"
+              style={{ color: "#3D2E4A", fontFamily: "var(--font-mono)" }}
             >
-              {item.icon}
-              {item.label}
-            </Link>
-          );
-        })}
+              {group.group}
+            </p>
+            <div className="space-y-0.5">
+              {group.items.map((item) => {
+                const isActive = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all"
+                    style={{
+                      color: isActive ? "#FFFFFF" : "#7A6886",
+                      background: isActive ? "rgba(214,51,108,0.14)" : "transparent",
+                      borderLeft: isActive ? "2px solid #D6336C" : "2px solid transparent",
+                    }}
+                    onMouseEnter={(e) => { if (!isActive) (e.currentTarget as HTMLAnchorElement).style.background = "rgba(255,255,255,0.04)"; }}
+                    onMouseLeave={(e) => { if (!isActive) (e.currentTarget as HTMLAnchorElement).style.background = "transparent"; }}
+                  >
+                    <svg className="h-4 w-4 shrink-0" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d={item.icon} />
+                    </svg>
+                    {item.label}
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        ))}
       </nav>
 
       {/* Logout */}
-      <div className="border-t border-[#3D2550] p-3">
+      <div className="px-3 pb-4" style={{ borderTop: "1px solid #1E1428", paddingTop: "16px" }}>
         <button
           onClick={handleLogout}
-          className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-[#C4A8D0] transition-colors hover:bg-[#3D2550] hover:text-white"
+          className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors"
+          style={{ color: "#7A6886" }}
+          onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.color = "#FFFFFF"; (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.04)"; }}
+          onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.color = "#7A6886"; (e.currentTarget as HTMLButtonElement).style.background = "transparent"; }}
         >
-          <svg
-            className="h-5 w-5"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9"
-            />
+          <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
           </svg>
-          Logout
+          Sign out
         </button>
       </div>
     </aside>

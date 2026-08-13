@@ -78,17 +78,20 @@ function getCoverImage(media?: Media[]): string | null {
   return cover?.url ?? media[0].url ?? null;
 }
 
-const STATUS_STYLES: Record<string, string> = {
-  LIVE: "bg-[#DEF2E9] text-[#0A6E52]",
-  PAUSED: "bg-[#EAE1EE] text-[#4A2E57]",
-  DRAFT: "bg-[#FFF0D4] text-[#DE8E0F]",
-  PENDING_REVIEW: "bg-[#FCE3ED] text-[#B71F56]",
-  RENTED_OUT: "bg-[#EAE1EE] text-[#4A2E57]",
-  REJECTED: "bg-red-100 text-red-800",
-};
-
 function statusLabel(status: string): string {
   return status.replace(/_/g, " ");
+}
+
+function statusBadgeClass(status: string): string {
+  const map: Record<string, string> = {
+    LIVE: "badge badge-green",
+    PAUSED: "badge badge-neutral",
+    DRAFT: "badge badge-neutral",
+    PENDING_REVIEW: "badge badge-amber",
+    RENTED_OUT: "badge badge-plum",
+    REJECTED: "badge badge-red",
+  };
+  return map[status] ?? "badge badge-neutral";
 }
 
 // ---------------------------------------------------------------------------
@@ -100,12 +103,10 @@ type Tab = "pending" | "all";
 export default function ListingsPage() {
   const [activeTab, setActiveTab] = useState<Tab>("pending");
 
-  // Pending listings state
   const [pendingListings, setPendingListings] = useState<Listing[]>([]);
   const [pendingLoading, setPendingLoading] = useState(true);
   const [pendingError, setPendingError] = useState<string | null>(null);
 
-  // All listings state
   const [allListings, setAllListings] = useState<Listing[]>([]);
   const [allLoading, setAllLoading] = useState(false);
   const [allError, setAllError] = useState<string | null>(null);
@@ -113,16 +114,10 @@ export default function ListingsPage() {
   const [total, setTotal] = useState(0);
   const limit = 20;
 
-  // Action loading states — track per listing id
   const [approvingIds, setApprovingIds] = useState<Set<string>>(new Set());
   const [rejectingIds, setRejectingIds] = useState<Set<string>>(new Set());
 
-  // Toasts
   const { toasts, addToast, dismissToast } = useToasts();
-
-  // -----------------------------------------------------------------------
-  // Data fetching
-  // -----------------------------------------------------------------------
 
   const fetchPending = useCallback(async () => {
     setPendingLoading(true);
@@ -153,19 +148,8 @@ export default function ListingsPage() {
     }
   }, [page]);
 
-  useEffect(() => {
-    fetchPending();
-  }, [fetchPending]);
-
-  useEffect(() => {
-    if (activeTab === "all") {
-      fetchAll();
-    }
-  }, [activeTab, fetchAll]);
-
-  // -----------------------------------------------------------------------
-  // Actions
-  // -----------------------------------------------------------------------
+  useEffect(() => { fetchPending(); }, [fetchPending]);
+  useEffect(() => { if (activeTab === "all") fetchAll(); }, [activeTab, fetchAll]);
 
   const handleApprove = async (id: string, title: string) => {
     setApprovingIds((prev) => new Set(prev).add(id));
@@ -176,11 +160,7 @@ export default function ListingsPage() {
     } catch (err) {
       addToast(errorMessage(err, `Failed to approve "${title}".`), "error");
     } finally {
-      setApprovingIds((prev) => {
-        const next = new Set(prev);
-        next.delete(id);
-        return next;
-      });
+      setApprovingIds((prev) => { const next = new Set(prev); next.delete(id); return next; });
     }
   };
 
@@ -193,102 +173,71 @@ export default function ListingsPage() {
     } catch (err) {
       addToast(errorMessage(err, `Failed to reject "${title}".`), "error");
     } finally {
-      setRejectingIds((prev) => {
-        const next = new Set(prev);
-        next.delete(id);
-        return next;
-      });
+      setRejectingIds((prev) => { const next = new Set(prev); next.delete(id); return next; });
     }
   };
 
-  // -----------------------------------------------------------------------
-  // Pagination
-  // -----------------------------------------------------------------------
-
   const totalPages = Math.max(1, Math.ceil(total / limit));
 
-  // -----------------------------------------------------------------------
-  // Render
-  // -----------------------------------------------------------------------
+  const TABS: Tab[] = ["pending", "all"];
+  const tabLabels: Record<Tab, string> = { pending: "Pending Review", all: "All Listings" };
 
   return (
-    <div className="min-h-screen bg-[#FFFCF6]">
-      {/* Header */}
-      <div className="border-b border-[#E8DDE4] bg-white">
-        <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-          <h1 className="text-2xl font-bold text-[#1C1424] font-[family-name:var(--font-headline)]">Listings</h1>
-          <p className="mt-1 text-sm text-[#5B4F62]">
-            Review and manage all listings on the platform.
-          </p>
-        </div>
+    <div>
+      {/* Page header */}
+      <div className="page-header">
+        <h1>Listings</h1>
+        <p>Review and manage all listings on the platform.</p>
       </div>
 
-      {/* Tabs */}
-      <div className="border-b border-[#E8DDE4] bg-white">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <nav className="-mb-px flex gap-6" aria-label="Tabs">
-            <button
-              onClick={() => setActiveTab("pending")}
-              className={`whitespace-nowrap border-b-2 px-1 py-3 text-sm font-medium transition-colors ${
-                activeTab === "pending"
-                  ? "border-[#D6336C] text-[#D6336C]"
-                  : "border-transparent text-[#5B4F62] hover:border-[#E8DDE4] hover:text-[#1C1424]"
-              }`}
-            >
-              Pending Review
-              {pendingListings.length > 0 && (
-                <span className="ml-2 inline-flex items-center rounded-full bg-[#FCE3ED] px-2 py-0.5 text-xs font-medium text-[#B71F56]">
-                  {pendingListings.length}
-                </span>
-              )}
-            </button>
-            <button
-              onClick={() => setActiveTab("all")}
-              className={`whitespace-nowrap border-b-2 px-1 py-3 text-sm font-medium transition-colors ${
-                activeTab === "all"
-                  ? "border-[#D6336C] text-[#D6336C]"
-                  : "border-transparent text-[#5B4F62] hover:border-[#E8DDE4] hover:text-[#1C1424]"
-              }`}
-            >
-              All Listings
-              {total > 0 && activeTab === "all" && (
-                <span className="ml-2 inline-flex items-center rounded-full bg-[#EAE1EE] px-2 py-0.5 text-xs font-medium text-[#5B4F62]">
-                  {total}
-                </span>
-              )}
-            </button>
-          </nav>
-        </div>
+      {/* Filter tabs */}
+      <div className="mb-6 flex gap-1 rounded-lg p-1" style={{ background: "#F5EDE8", width: "fit-content" }}>
+        {TABS.map((tab) => (
+          <button
+            key={tab}
+            onClick={() => setActiveTab(tab)}
+            className="rounded-md px-5 py-1.5 text-sm font-medium transition-all"
+            style={
+              activeTab === tab
+                ? { background: "#fff", color: "#1C1424", boxShadow: "0 1px 3px rgba(28,20,36,0.1)" }
+                : { color: "#8B7A97" }
+            }
+          >
+            {tabLabels[tab]}
+            {tab === "pending" && pendingListings.length > 0 && (
+              <span className="ml-2 badge badge-pink" style={{ fontSize: "10px", padding: "1px 6px" }}>
+                {pendingListings.length}
+              </span>
+            )}
+          </button>
+        ))}
       </div>
 
       {/* Content */}
-      <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-        {activeTab === "pending" ? (
-          <PendingTab
-            listings={pendingListings}
-            loading={pendingLoading}
-            error={pendingError}
-            approvingIds={approvingIds}
-            rejectingIds={rejectingIds}
-            onApprove={handleApprove}
-            onReject={handleReject}
-            onRetry={fetchPending}
-          />
-        ) : (
-          <AllListingsTab
-            listings={allListings}
-            loading={allLoading}
-            error={allError}
-            page={page}
-            totalPages={totalPages}
-            total={total}
-            onPageChange={setPage}
-            onRetry={fetchAll}
-          />
-        )}
-      </div>
+      {activeTab === "pending" ? (
+        <PendingTab
+          listings={pendingListings}
+          loading={pendingLoading}
+          error={pendingError}
+          approvingIds={approvingIds}
+          rejectingIds={rejectingIds}
+          onApprove={handleApprove}
+          onReject={handleReject}
+          onRetry={fetchPending}
+        />
+      ) : (
+        <AllListingsTab
+          listings={allListings}
+          loading={allLoading}
+          error={allError}
+          page={page}
+          totalPages={totalPages}
+          total={total}
+          onPageChange={setPage}
+          onRetry={fetchAll}
+        />
+      )}
 
-      {/* Toasts */}
       <ToastContainer toasts={toasts} onDismiss={dismissToast} />
     </div>
   );
@@ -320,7 +269,7 @@ function PendingTab({
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <Spinner className="h-8 w-8 text-[#D6336C]" />
+        <div className="h-8 w-8 rounded-full border-4 border-transparent animate-spin" style={{ borderTopColor: "#D6336C", borderRightColor: "#FCE3ED" }} />
       </div>
     );
   }
@@ -328,13 +277,8 @@ function PendingTab({
   if (error) {
     return (
       <div className="flex flex-col items-center justify-center py-20 text-center">
-        <p className="text-sm text-red-600">{error}</p>
-        <button
-          onClick={onRetry}
-          className="mt-3 rounded-[999px] bg-[#D6336C] px-4 py-2 text-sm font-medium text-white hover:bg-[#B71F56]"
-        >
-          Retry
-        </button>
+        <p className="text-sm mb-3" style={{ color: "#D6336C" }}>{error}</p>
+        <button onClick={onRetry} className="btn-primary">Retry</button>
       </div>
     );
   }
@@ -342,34 +286,19 @@ function PendingTab({
   if (listings.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-20 text-center">
-        {/* Checkmark icon */}
-        <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#DEF2E9]">
-          <svg
-            className="h-8 w-8 text-[#0E8F6B]"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={2}
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M5 13l4 4L19 7"
-            />
+        <div className="mb-4 h-16 w-16 rounded-full flex items-center justify-center" style={{ background: "#F5EDE8" }}>
+          <svg className="h-8 w-8" style={{ color: "#C4A8B8" }} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
           </svg>
         </div>
-        <h3 className="mt-4 text-lg font-medium text-[#1C1424]">
-          No pending listings
-        </h3>
-        <p className="mt-1 text-sm text-[#5B4F62]">
-          All listings have been reviewed. Check back later.
-        </p>
+        <p className="font-medium" style={{ color: "#1C1424" }}>No pending listings</p>
+        <p className="mt-1 text-sm" style={{ color: "#8B7A97" }}>All listings have been reviewed. Check back later.</p>
       </div>
     );
   }
 
   return (
-    <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+    <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
       {listings.map((listing) => (
         <PendingCard
           key={listing.id}
@@ -404,121 +333,69 @@ function PendingCard({
   const imageUrl = getCoverImage(listing.media);
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-[#E8DDE4] bg-white shadow-[0_1px_3px_rgba(28,20,36,0.08)]">
+    <div className="admin-card">
       {/* Image */}
-      <div className="relative h-48 w-full bg-[#faf4f0]">
+      <div className="relative h-48 w-full" style={{ background: "#F5EDE8" }}>
         {imageUrl ? (
-          <Image
-            src={imageUrl}
-            alt={listing.title}
-            fill
-            className="object-cover"
-            sizes="(max-width: 768px) 100vw, 50vw"
-          />
+          <Image src={imageUrl} alt={listing.title} fill className="object-cover" sizes="(max-width: 768px) 100vw, 50vw" />
         ) : (
           <div className="flex h-full w-full items-center justify-center">
-            <svg
-              className="h-12 w-12 text-[#E8DDE4]"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={1}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-              />
+            <svg className="h-12 w-12" style={{ color: "#E8DDE4" }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
           </div>
         )}
       </div>
 
       {/* Body */}
-      <div className="p-4">
+      <div className="p-5">
         <div className="flex items-start justify-between gap-2">
-          <h3 className="text-base font-semibold text-[#1C1424] line-clamp-1">
-            {listing.title}
-          </h3>
-          <span className="shrink-0 text-base font-bold text-[#D6336C]">
+          <h3 className="text-base font-semibold line-clamp-1" style={{ color: "#1C1424" }}>{listing.title}</h3>
+          <span className="shrink-0 font-semibold" style={{ fontFamily: "var(--font-mono)", color: "#D6336C", fontSize: "14px" }}>
             {formatPKR(listing.rentalPrice)}
           </span>
         </div>
 
         {listing.category && (
-          <p className="mt-1 text-xs font-medium text-[#5B4F62]">
-            {listing.category.name}
-          </p>
+          <p className="mt-1 text-xs" style={{ color: "#8B7A97" }}>{listing.category.name}</p>
         )}
 
-        {/* Owner */}
         {listing.owner && (
           <div className="mt-3 flex items-center gap-2">
             {listing.owner.avatarUrl ? (
-              <Image
-                src={listing.owner.avatarUrl}
-                alt={listing.owner.name || "Owner"}
-                width={24}
-                height={24}
-                className="rounded-full"
-              />
+              <Image src={listing.owner.avatarUrl} alt={listing.owner.name || "Owner"} width={22} height={22} className="rounded-full" />
             ) : (
-              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#EAE1EE] text-xs font-medium text-[#4A2E57]">
+              <div className="flex h-6 w-6 items-center justify-center rounded-full text-xs font-semibold" style={{ background: "#EAE1EE", color: "#4A2E57" }}>
                 {(listing.owner.name ?? "?").charAt(0).toUpperCase()}
               </div>
             )}
-            <span className="text-sm text-[#1C1424]">
-              {listing.owner.name ?? "Unknown"}
-            </span>
+            <span className="text-sm" style={{ color: "#5B4F62" }}>{listing.owner.name ?? "Unknown"}</span>
             {listing.owner.ownerType && (
-              <span className="rounded-full bg-[#EAE1EE] px-2 py-0.5 text-xs font-medium text-[#4A2E57]">
-                {listing.owner.ownerType}
-              </span>
+              <span className="badge badge-plum">{listing.owner.ownerType}</span>
             )}
           </div>
         )}
 
-        {/* Submitted date */}
-        <p className="mt-2 text-xs text-[#5B4F62]/60">
-          Submitted {formatDate(listing.createdAt)}
-        </p>
+        <p className="mt-2 text-xs" style={{ color: "#B0A0B8" }}>Submitted {formatDate(listing.createdAt)}</p>
 
-        {/* Description preview */}
         {listing.description && (
-          <p className="mt-2 text-sm text-[#5B4F62] line-clamp-2">
-            {listing.description}
-          </p>
+          <p className="mt-2 text-sm line-clamp-2" style={{ color: "#5B4F62" }}>{listing.description}</p>
         )}
 
-        {/* Actions */}
         <div className="mt-4 flex gap-3">
           <button
             onClick={onApprove}
             disabled={approving || rejecting}
-            className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-[999px] bg-[#0E8F6B] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[#0A6E52] disabled:opacity-60"
+            className="btn-success flex-1"
           >
-            {approving ? (
-              <>
-                <Spinner />
-                Approving...
-              </>
-            ) : (
-              "Approve"
-            )}
+            {approving ? <><Spinner /> Approving…</> : "Approve"}
           </button>
           <button
             onClick={onReject}
             disabled={approving || rejecting}
-            className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-[999px] bg-red-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-red-700 disabled:opacity-60"
+            className="btn-danger flex-1"
           >
-            {rejecting ? (
-              <>
-                <Spinner />
-                Rejecting...
-              </>
-            ) : (
-              "Reject"
-            )}
+            {rejecting ? <><Spinner /> Rejecting…</> : "Reject"}
           </button>
         </div>
       </div>
@@ -552,7 +429,7 @@ function AllListingsTab({
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <Spinner className="h-8 w-8 text-[#D6336C]" />
+        <div className="h-8 w-8 rounded-full border-4 border-transparent animate-spin" style={{ borderTopColor: "#D6336C", borderRightColor: "#FCE3ED" }} />
       </div>
     );
   }
@@ -560,13 +437,8 @@ function AllListingsTab({
   if (error) {
     return (
       <div className="flex flex-col items-center justify-center py-20 text-center">
-        <p className="text-sm text-red-600">{error}</p>
-        <button
-          onClick={onRetry}
-          className="mt-3 rounded-[999px] bg-[#D6336C] px-4 py-2 text-sm font-medium text-white hover:bg-[#B71F56]"
-        >
-          Retry
-        </button>
+        <p className="text-sm mb-3" style={{ color: "#D6336C" }}>{error}</p>
+        <button onClick={onRetry} className="btn-primary">Retry</button>
       </div>
     );
   }
@@ -574,111 +446,57 @@ function AllListingsTab({
   if (listings.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-20 text-center">
-        <h3 className="text-lg font-medium text-[#1C1424]">No listings found</h3>
-        <p className="mt-1 text-sm text-[#5B4F62]">
-          There are no listings to display.
-        </p>
+        <div className="mb-4 h-16 w-16 rounded-full flex items-center justify-center" style={{ background: "#F5EDE8" }}>
+          <svg className="h-8 w-8" style={{ color: "#C4A8B8" }} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
+          </svg>
+        </div>
+        <p className="font-medium" style={{ color: "#1C1424" }}>No listings yet</p>
+        <p className="mt-1 text-sm" style={{ color: "#8B7A97" }}>Listings will appear here once submitted.</p>
       </div>
     );
   }
 
   return (
     <div>
-      {/* Table */}
-      <div className="overflow-hidden rounded-2xl border border-[#E8DDE4] bg-white shadow-[0_1px_3px_rgba(28,20,36,0.08)]">
+      <div className="admin-card">
         <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-[#E8DDE4]">
-            <thead className="bg-[#FFFCF6]">
+          <table className="admin-table">
+            <thead>
               <tr>
-                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-[#5B4F62]">
-                  Image
-                </th>
-                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-[#5B4F62]">
-                  Title
-                </th>
-                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-[#5B4F62]">
-                  Category
-                </th>
-                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-[#5B4F62]">
-                  Price
-                </th>
-                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-[#5B4F62]">
-                  Status
-                </th>
-                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-[#5B4F62]">
-                  Owner
-                </th>
-                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-[#5B4F62]">
-                  Date
-                </th>
+                <th>Image</th>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Status</th>
+                <th>Owner</th>
+                <th>Date</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#E8DDE4] bg-white">
+            <tbody>
               {listings.map((listing) => {
                 const imageUrl = getCoverImage(listing.media);
                 return (
-                  <tr key={listing.id} className="hover:bg-[#faf4f0]">
-                    {/* Image */}
-                    <td className="whitespace-nowrap px-4 py-3">
-                      <div className="relative h-10 w-10 overflow-hidden rounded-md bg-[#faf4f0]">
+                  <tr key={listing.id}>
+                    <td>
+                      <div className="relative h-10 w-10 overflow-hidden rounded-lg" style={{ background: "#F5EDE8" }}>
                         {imageUrl ? (
-                          <Image
-                            src={imageUrl}
-                            alt={listing.title}
-                            fill
-                            className="object-cover"
-                            sizes="40px"
-                          />
+                          <Image src={imageUrl} alt={listing.title} fill className="object-cover" sizes="40px" />
                         ) : (
                           <div className="flex h-full w-full items-center justify-center">
-                            <svg
-                              className="h-5 w-5 text-[#E8DDE4]"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                              strokeWidth={1}
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                              />
+                            <svg className="h-5 w-5" style={{ color: "#E8DDE4" }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                             </svg>
                           </div>
                         )}
                       </div>
                     </td>
-                    {/* Title */}
-                    <td className="max-w-[200px] truncate px-4 py-3 text-sm font-medium text-[#1C1424]">
-                      {listing.title}
-                    </td>
-                    {/* Category */}
-                    <td className="whitespace-nowrap px-4 py-3 text-sm text-[#5B4F62]">
-                      {listing.category?.name ?? "-"}
-                    </td>
-                    {/* Price */}
-                    <td className="whitespace-nowrap px-4 py-3 text-sm font-medium text-[#1C1424]">
-                      {formatPKR(listing.rentalPrice)}
-                    </td>
-                    {/* Status */}
-                    <td className="whitespace-nowrap px-4 py-3">
-                      <span
-                        className={`inline-flex rounded-full px-2 py-0.5 text-xs font-medium ${
-                          STATUS_STYLES[listing.status] ??
-                          "bg-[#EAE1EE] text-[#4A2E57]"
-                        }`}
-                      >
-                        {statusLabel(listing.status)}
-                      </span>
-                    </td>
-                    {/* Owner */}
-                    <td className="whitespace-nowrap px-4 py-3 text-sm text-[#5B4F62]">
-                      {listing.owner?.name ?? "-"}
-                    </td>
-                    {/* Date */}
-                    <td className="whitespace-nowrap px-4 py-3 text-sm text-[#5B4F62]">
-                      {formatDate(listing.createdAt)}
-                    </td>
+                    <td className="max-w-[180px] truncate font-medium" style={{ color: "#1C1424" }}>{listing.title}</td>
+                    <td style={{ color: "#5B4F62" }}>{listing.category?.name ?? "—"}</td>
+                    <td style={{ fontFamily: "var(--font-mono)", fontSize: "13px" }}>{formatPKR(listing.rentalPrice)}</td>
+                    <td><span className={statusBadgeClass(listing.status)}>{statusLabel(listing.status)}</span></td>
+                    <td style={{ color: "#5B4F62" }}>{listing.owner?.name ?? "—"}</td>
+                    <td style={{ color: "#8B7A97", fontSize: "13px" }}>{formatDate(listing.createdAt)}</td>
                   </tr>
                 );
               })}
@@ -688,29 +506,21 @@ function AllListingsTab({
       </div>
 
       {/* Pagination */}
-      <div className="mt-4 flex items-center justify-between">
-        <p className="text-sm text-[#5B4F62]">
+      <div className="mt-5 flex items-center justify-between">
+        <p className="text-sm" style={{ color: "#8B7A97" }}>
           Showing{" "}
-          <span className="font-medium">{(page - 1) * 20 + 1}</span>
-          {" "}-{" "}
-          <span className="font-medium">
-            {Math.min(page * 20, total)}
-          </span>{" "}
-          of <span className="font-medium">{total}</span> listings
+          <span className="font-medium" style={{ color: "#1C1424" }}>{(page - 1) * 20 + 1}</span>
+          {" – "}
+          <span className="font-medium" style={{ color: "#1C1424" }}>{Math.min(page * 20, total)}</span>
+          {" of "}
+          <span className="font-medium" style={{ color: "#1C1424" }}>{total}</span>
+          {" listings"}
         </p>
         <div className="flex gap-2">
-          <button
-            onClick={() => onPageChange(page - 1)}
-            disabled={page <= 1}
-            className="rounded-[999px] border border-[#E8DDE4] bg-white px-4 py-2 text-sm font-medium text-[#1C1424] transition-colors hover:bg-[#faf4f0] disabled:cursor-not-allowed disabled:opacity-50"
-          >
+          <button onClick={() => onPageChange(page - 1)} disabled={page <= 1} className="btn-ghost" style={{ padding: "7px 16px" }}>
             Previous
           </button>
-          <button
-            onClick={() => onPageChange(page + 1)}
-            disabled={page >= totalPages}
-            className="rounded-[999px] border border-[#E8DDE4] bg-white px-4 py-2 text-sm font-medium text-[#1C1424] transition-colors hover:bg-[#faf4f0] disabled:cursor-not-allowed disabled:opacity-50"
-          >
+          <button onClick={() => onPageChange(page + 1)} disabled={page >= totalPages} className="btn-ghost" style={{ padding: "7px 16px" }}>
             Next
           </button>
         </div>
