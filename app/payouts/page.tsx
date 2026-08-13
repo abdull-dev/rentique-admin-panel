@@ -393,7 +393,7 @@ function DisburseModal({
       const prefilled =
         `Hi ${name}, we've transferred your payout of ${settled} to your ` +
         `registered ${destination(owed)}. Reference: ${ref}. ` +
-        `Thank you for renting with Rentique!`;
+        `Thank you for renting with Dresso.io!`;
       addToast(`Marked ${settled} paid to ${name}.`, "success");
       onDisbursed({
         ownerId: owed.owner.id,
@@ -543,7 +543,7 @@ function NotifyModal({
   const [message, setMessage] = useState(
     record.prefilledMessage ||
       `Hi ${record.name}, your payout of ${record.settledAmount} has been ` +
-        `transferred. Reference: ${record.reference}. Thank you for renting with Rentique!`,
+        `transferred. Reference: ${record.reference}. Thank you for renting with Dresso.io!`,
   );
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -632,7 +632,7 @@ function NotifyForm({
             htmlFor="notifyMessage"
             className="mb-1.5 block text-sm font-medium text-gray-700"
           >
-            Message (from &ldquo;Rentique Payouts&rdquo;)
+            Message (from &ldquo;Dresso.io Payouts&rdquo;)
           </label>
           <textarea
             id="notifyMessage"

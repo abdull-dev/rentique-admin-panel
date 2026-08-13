@@ -70,7 +70,7 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
       <div className="flex h-screen w-screen items-center justify-center bg-gray-50">
         <div className="w-full max-w-sm rounded-xl border border-gray-200 bg-white p-8 shadow-sm">
           <div className="mb-6 text-center">
-            <h1 className="text-2xl font-bold text-gray-900">Rentique Admin</h1>
+            <h1 className="text-2xl font-bold text-gray-900">Dresso.io Admin</h1>
             <p className="mt-2 text-sm text-gray-600">
               Sign in to access the admin dashboard
             </p>
@@ -91,7 +91,7 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 placeholder-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
-                placeholder="admin@rentique.com"
+                placeholder="admin@dresso.io"
               />
             </div>
 

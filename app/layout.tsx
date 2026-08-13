@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Rentique Admin",
-  description: "Admin dashboard for the Rentique rental marketplace",
+  title: "Dresso.io Admin",
+  description: "Admin dashboard for the Dresso.io rental marketplace",
 };
 
 export default function RootLayout({
