@@ -62,7 +62,7 @@ export function ToastContainer({
         <div
           key={t.id}
           className={`flex items-center gap-2 rounded-lg px-4 py-3 text-sm font-medium text-white shadow-lg transition-all ${
-            t.type === "success" ? "bg-green-600" : "bg-red-600"
+            t.type === "success" ? "bg-[#0E8F6B]" : "bg-[#D6336C]"
           }`}
         >
           <span>{t.message}</span>

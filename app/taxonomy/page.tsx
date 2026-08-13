@@ -108,10 +108,10 @@ export default function TaxonomyPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6 md:p-10">
+    <div className="min-h-screen bg-[#FFFCF6] p-6 md:p-10">
       <div className="mx-auto max-w-3xl space-y-4">
-        <h1 className="text-2xl font-bold text-gray-900">Taxonomy Browser</h1>
-        <p className="text-sm text-gray-500">
+        <h1 className="text-2xl font-bold text-[#1C1424] font-[family-name:var(--font-headline)]">Taxonomy Browser</h1>
+        <p className="text-sm text-[#5B4F62]">
           Read-only view of all taxonomy tables. Click a section to expand.
         </p>
 
@@ -133,7 +133,7 @@ export default function TaxonomyPage() {
           return (
             <div
               key={section.key}
-              className="rounded-lg bg-white shadow"
+              className="rounded-2xl bg-white border border-[#E8DDE4] shadow-[0_1px_3px_rgba(28,20,36,0.08)]"
             >
               {/* Header (accordion toggle) */}
               <button
@@ -142,17 +142,17 @@ export default function TaxonomyPage() {
                 className="flex w-full items-center justify-between px-5 py-4 text-left"
               >
                 <div className="flex items-center gap-3">
-                  <span className="text-base font-semibold text-gray-900">
+                  <span className="text-base font-semibold text-[#1C1424]">
                     {section.label}
                   </span>
                   {!section.loading && (
-                    <span className="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-700">
+                    <span className="inline-flex items-center rounded-full bg-[#EAE1EE] px-2.5 py-0.5 text-xs font-medium text-[#4A2E57]">
                       {section.items.length}
                     </span>
                   )}
                 </div>
                 <svg
-                  className={`h-5 w-5 text-gray-400 transition-transform ${isOpen ? "rotate-180" : ""}`}
+                  className={`h-5 w-5 text-[#5B4F62]/60 transition-transform ${isOpen ? "rotate-180" : ""}`}
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -168,9 +168,9 @@ export default function TaxonomyPage() {
 
               {/* Body */}
               {isOpen && (
-                <div className="border-t px-5 pb-5 pt-3">
+                <div className="border-t border-[#E8DDE4] px-5 pb-5 pt-3">
                   {section.loading && (
-                    <p className="text-sm text-gray-400">Loading...</p>
+                    <p className="text-sm text-[#5B4F62]/60">Loading...</p>
                   )}
 
                   {section.error && (
@@ -189,8 +189,8 @@ export default function TaxonomyPage() {
                               onClick={() => setGenderFilter(g)}
                               className={`rounded-full px-3 py-1 text-xs font-medium transition-colors ${
                                 genderFilter === g
-                                  ? "bg-blue-600 text-white"
-                                  : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                                  ? "bg-[#D6336C] text-white"
+                                  : "bg-[#EAE1EE] text-[#4A2E57] hover:bg-[#E8DDE4]"
                               }`}
                             >
                               {g}
@@ -200,7 +200,7 @@ export default function TaxonomyPage() {
                       )}
 
                       {visibleItems.length === 0 ? (
-                        <p className="text-sm text-gray-400">
+                        <p className="text-sm text-[#5B4F62]/60">
                           No items found.
                         </p>
                       ) : (
@@ -208,33 +208,33 @@ export default function TaxonomyPage() {
                           {visibleItems.map((item) => (
                             <span
                               key={item.id}
-                              className="inline-flex items-center gap-1.5 rounded-full border border-gray-200 bg-gray-50 px-3 py-1.5 text-sm"
+                              className="inline-flex items-center gap-1.5 rounded-full border border-[#E8DDE4] bg-[#FFFCF6] px-3 py-1.5 text-sm"
                             >
                               {/* Color swatch */}
                               {isColors && item.hex && (
                                 <span
-                                  className="inline-block h-3.5 w-3.5 rounded-full border border-gray-300"
+                                  className="inline-block h-3.5 w-3.5 rounded-full border border-[#E8DDE4]"
                                   style={{ backgroundColor: item.hex }}
                                 />
                               )}
 
-                              <span className="font-medium text-gray-900">
+                              <span className="font-medium text-[#1C1424]">
                                 {item.name}
                               </span>
-                              <span className="text-xs text-gray-400">
+                              <span className="text-xs text-[#5B4F62]/60">
                                 {item.slug}
                               </span>
 
                               {/* Dress type gender badge */}
                               {isDressTypes && item.gender && (
-                                <span className="ml-0.5 rounded bg-purple-50 px-1.5 py-0.5 text-[10px] font-medium text-purple-600">
+                                <span className="ml-0.5 rounded bg-[#EAE1EE] px-1.5 py-0.5 text-[10px] font-medium text-[#4A2E57]">
                                   {item.gender}
                                 </span>
                               )}
 
                               {/* City country */}
                               {section.key === "cities" && item.country && (
-                                <span className="ml-0.5 rounded bg-blue-50 px-1.5 py-0.5 text-[10px] font-medium text-blue-600">
+                                <span className="ml-0.5 rounded bg-[#FCE3ED] px-1.5 py-0.5 text-[10px] font-medium text-[#B71F56]">
                                   {item.country}
                                 </span>
                               )}

@@ -27,18 +27,18 @@ export default function Modal({
         onClick={onClose}
       />
       <div
-        className={`relative w-full ${maxWidthClassName} rounded-xl border border-gray-200 bg-white shadow-2xl`}
+        className={`relative w-full ${maxWidthClassName} rounded-2xl border border-[#E8DDE4] bg-white shadow-2xl`}
       >
-        <div className="flex items-center justify-between border-b border-gray-100 px-6 py-4">
+        <div className="flex items-center justify-between border-b border-[#E8DDE4] px-6 py-4">
           <div>
-            <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
+            <h3 className="text-lg font-semibold text-[#1C1424]">{title}</h3>
             {subtitle && (
-              <p className="mt-0.5 text-sm text-gray-500">{subtitle}</p>
+              <p className="mt-0.5 text-sm text-[#5B4F62]">{subtitle}</p>
             )}
           </div>
           <button
             onClick={onClose}
-            className="rounded-md p-1 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600"
+            className="rounded-md p-1 text-[#5B4F62]/60 transition-colors hover:bg-[#faf4f0] hover:text-[#1C1424]"
           >
             <svg
               className="h-5 w-5"

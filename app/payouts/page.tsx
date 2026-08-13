@@ -120,11 +120,11 @@ function PayoutsContent() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="border-b border-gray-200 bg-white">
+    <div className="min-h-screen bg-[#FFFCF6]">
+      <div className="border-b border-[#E8DDE4] bg-white">
         <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-          <h1 className="text-2xl font-bold text-gray-900">Payouts</h1>
-          <p className="mt-1 text-sm text-gray-500">
+          <h1 className="text-2xl font-bold text-[#1C1424] font-[family-name:var(--font-headline)]">Payouts</h1>
+          <p className="mt-1 text-sm text-[#5B4F62]">
             Outstanding balances owed to owners. Make the bank transfer, then
             record it here.
           </p>
@@ -134,23 +134,23 @@ function PayoutsContent() {
       <div className="mx-auto max-w-7xl space-y-8 px-4 py-6 sm:px-6 lg:px-8">
         {loading ? (
           <div className="flex items-center justify-center py-20">
-            <Spinner className="h-8 w-8 text-indigo-600" />
+            <Spinner className="h-8 w-8 text-[#D6336C]" />
           </div>
         ) : error ? (
           <div className="flex flex-col items-center justify-center py-20 text-center">
             <p className="text-sm text-red-600">{error}</p>
             <button
               onClick={fetchOwed}
-              className="mt-3 rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700"
+              className="mt-3 rounded-[999px] bg-[#D6336C] px-4 py-2 text-sm font-medium text-white hover:bg-[#B71F56]"
             >
               Retry
             </button>
           </div>
         ) : owed.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20 text-center">
-            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#DEF2E9]">
               <svg
-                className="h-8 w-8 text-green-600"
+                className="h-8 w-8 text-[#0E8F6B]"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -163,24 +163,24 @@ function PayoutsContent() {
                 />
               </svg>
             </div>
-            <h3 className="mt-4 text-lg font-medium text-gray-900">
+            <h3 className="mt-4 text-lg font-medium text-[#1C1424]">
               Nothing owed
             </h3>
-            <p className="mt-1 text-sm text-gray-500">
+            <p className="mt-1 text-sm text-[#5B4F62]">
               All owners have been paid out.
             </p>
           </div>
         ) : (
-          <div className="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
+          <div className="overflow-hidden rounded-2xl border border-[#E8DDE4] bg-white shadow-[0_1px_3px_rgba(28,20,36,0.08)]">
             <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
+              <table className="min-w-full divide-y divide-[#E8DDE4]">
+                <thead className="bg-[#FFFCF6]">
                   <tr>
                     {["Owner", "Owed", "Bookings", "Destination", "Status", ""].map(
                       (h) => (
                         <th
                           key={h}
-                          className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
+                          className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-[#5B4F62]"
                         >
                           {h}
                         </th>
@@ -188,31 +188,31 @@ function PayoutsContent() {
                     )}
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-200 bg-white">
+                <tbody className="divide-y divide-[#E8DDE4] bg-white">
                   {owed.map((o) => (
-                    <tr key={o.owner.id} className="hover:bg-gray-50">
+                    <tr key={o.owner.id} className="hover:bg-[#faf4f0]">
                       <td className="px-4 py-3">
-                        <div className="text-sm font-medium text-gray-900">
+                        <div className="text-sm font-medium text-[#1C1424]">
                           {ownerName(o)}
                         </div>
                         {o.owner.email && (
-                          <div className="text-xs text-gray-500">
+                          <div className="text-xs text-[#5B4F62]">
                             {o.owner.email}
                           </div>
                         )}
                       </td>
-                      <td className="whitespace-nowrap px-4 py-3 text-sm font-semibold text-gray-900">
+                      <td className="whitespace-nowrap px-4 py-3 text-sm font-semibold text-[#1C1424]">
                         {formatPKR(o.totalAmount)}
                       </td>
-                      <td className="whitespace-nowrap px-4 py-3 text-sm text-gray-500">
+                      <td className="whitespace-nowrap px-4 py-3 text-sm text-[#5B4F62]">
                         {o.payoutCount}
                       </td>
-                      <td className="px-4 py-3 font-mono text-xs text-gray-500">
+                      <td className="px-4 py-3 font-mono text-xs text-[#5B4F62]">
                         {destination(o)}
                       </td>
                       <td className="whitespace-nowrap px-4 py-3">
                         {o.payable ? (
-                          <span className="inline-flex rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-800">
+                          <span className="inline-flex rounded-full bg-[#DEF2E9] px-2 py-0.5 text-xs font-medium text-[#0A6E52]">
                             Ready
                           </span>
                         ) : (
@@ -220,7 +220,7 @@ function PayoutsContent() {
                           // the verification queue so the admin can act on it.
                           <Link
                             href="/payout-accounts"
-                            className="inline-flex items-center gap-1 rounded-full bg-yellow-100 px-2 py-0.5 text-xs font-medium text-yellow-800 hover:bg-yellow-200"
+                            className="inline-flex items-center gap-1 rounded-full bg-[#FFF0D4] px-2 py-0.5 text-xs font-medium text-[#DE8E0F] hover:bg-[#FFF0D4]/70"
                             title="Verify this owner's payout account"
                           >
                             Account not verified →
@@ -236,7 +236,7 @@ function PayoutsContent() {
                               ? undefined
                               : "Owner's payout account must be verified first"
                           }
-                          className="rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-medium text-white transition-colors hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-50"
+                          className="rounded-[999px] bg-[#D6336C] px-3 py-1.5 text-sm font-medium text-white transition-colors hover:bg-[#B71F56] disabled:cursor-not-allowed disabled:opacity-50"
                         >
                           Mark paid
                         </button>
@@ -253,40 +253,40 @@ function PayoutsContent() {
             again (or for the first time, if notify was skipped/failed). */}
         {paid.length > 0 && (
           <div>
-            <h2 className="text-sm font-semibold text-gray-700">
+            <h2 className="text-sm font-semibold text-[#1C1424]">
               Recently paid (this session)
             </h2>
-            <div className="mt-2 overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
-              <ul className="divide-y divide-gray-100">
+            <div className="mt-2 overflow-hidden rounded-2xl border border-[#E8DDE4] bg-white shadow-[0_1px_3px_rgba(28,20,36,0.08)]">
+              <ul className="divide-y divide-[#E8DDE4]">
                 {paid.map((p) => (
                   <li
                     key={p.ownerId}
                     className="flex items-center justify-between gap-4 px-4 py-3"
                   >
                     <div className="min-w-0">
-                      <p className="truncate text-sm font-medium text-gray-900">
+                      <p className="truncate text-sm font-medium text-[#1C1424]">
                         {p.name}{" "}
-                        <span className="font-normal text-gray-500">
+                        <span className="font-normal text-[#5B4F62]">
                           · {p.settledAmount}
                         </span>
                       </p>
-                      <p className="truncate font-mono text-xs text-gray-400">
+                      <p className="truncate font-mono text-xs text-[#5B4F62]/60">
                         Ref: {p.reference}
                       </p>
                     </div>
                     <div className="flex shrink-0 items-center gap-3">
                       {p.notified ? (
-                        <span className="inline-flex items-center gap-1 text-xs font-medium text-green-700">
+                        <span className="inline-flex items-center gap-1 text-xs font-medium text-[#0E8F6B]">
                           ✓ Notified
                         </span>
                       ) : (
-                        <span className="text-xs text-yellow-700">
+                        <span className="text-xs text-[#DE8E0F]">
                           Not notified
                         </span>
                       )}
                       <button
                         onClick={() => setNotifyTarget(p)}
-                        className="rounded-md border border-gray-300 px-3 py-1 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50"
+                        className="rounded-[999px] border border-[#E8DDE4] px-3 py-1 text-sm font-medium text-[#1C1424] transition-colors hover:bg-[#faf4f0]"
                       >
                         {p.notified ? "Re-notify" : "Notify"}
                       </button>
@@ -449,13 +449,13 @@ function DisburseModal({
       {phase === "disburse" ? (
         <form onSubmit={handleDisburse}>
           <div className="space-y-5 px-6 py-5">
-            <div className="rounded-lg bg-gray-50 px-4 py-3 text-sm">
-              <p className="text-gray-500">Transfer destination</p>
-              <p className="mt-0.5 font-mono text-xs text-gray-900">
+            <div className="rounded-lg bg-[#FFFCF6] px-4 py-3 text-sm border border-[#E8DDE4]">
+              <p className="text-[#5B4F62]">Transfer destination</p>
+              <p className="mt-0.5 font-mono text-xs text-[#1C1424]">
                 {destination(owed)}
               </p>
-              <p className="mt-2 text-gray-500">Account title</p>
-              <p className="mt-0.5 text-gray-900">
+              <p className="mt-2 text-[#5B4F62]">Account title</p>
+              <p className="mt-0.5 text-[#1C1424]">
                 {owed.payoutAccount?.accountTitle ?? "—"}
               </p>
             </div>
@@ -463,7 +463,7 @@ function DisburseModal({
             <div>
               <label
                 htmlFor="reference"
-                className="mb-1.5 block text-sm font-medium text-gray-700"
+                className="mb-1.5 block text-sm font-medium text-[#1C1424]"
               >
                 Bank transfer reference
               </label>
@@ -473,9 +473,9 @@ function DisburseModal({
                 value={reference}
                 onChange={(e) => setReference(e.target.value)}
                 placeholder="e.g. IBFT-20260616-00482"
-                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                className="w-full rounded-lg border border-[#E8DDE4] px-3 py-2 text-sm text-[#1C1424] placeholder:text-[#5B4F62]/60 focus:border-[#D6336C] focus:outline-none focus:ring-1 focus:ring-[#D6336C]"
               />
-              <p className="mt-1 text-xs text-gray-500">
+              <p className="mt-1 text-xs text-[#5B4F62]">
                 Make the bank transfer first, then paste its reference here.
                 This marks all {owed.payoutCount} outstanding payout
                 {owed.payoutCount === 1 ? "" : "s"} as paid.
@@ -489,19 +489,19 @@ function DisburseModal({
             )}
           </div>
 
-          <div className="flex items-center justify-end gap-3 border-t border-gray-100 px-6 py-4">
+          <div className="flex items-center justify-end gap-3 border-t border-[#E8DDE4] px-6 py-4">
             <button
               type="button"
               onClick={onClose}
               disabled={submitting}
-              className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 disabled:opacity-50"
+              className="rounded-[999px] border border-[#E8DDE4] bg-white px-4 py-2 text-sm font-medium text-[#1C1424] transition-colors hover:bg-[#faf4f0] disabled:opacity-50"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={submitting || !isValidReference(reference)}
-              className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-50"
+              className="inline-flex items-center gap-1.5 rounded-[999px] bg-[#D6336C] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[#B71F56] disabled:cursor-not-allowed disabled:opacity-50"
             >
               {submitting && <Spinner />}
               {submitting ? "Recording..." : "Mark paid"}
@@ -624,13 +624,13 @@ function NotifyForm({
   return (
     <form onSubmit={onSubmit}>
       <div className="space-y-4 px-6 py-5">
-        <div className="rounded-lg border border-green-200 bg-green-50 px-3 py-2">
-          <p className="text-sm text-green-800">{intro}</p>
+        <div className="rounded-lg border border-[#DEF2E9] bg-[#DEF2E9]/40 px-3 py-2">
+          <p className="text-sm text-[#0A6E52]">{intro}</p>
         </div>
         <div>
           <label
             htmlFor="notifyMessage"
-            className="mb-1.5 block text-sm font-medium text-gray-700"
+            className="mb-1.5 block text-sm font-medium text-[#1C1424]"
           >
             Message (from &ldquo;Dresso.io Payouts&rdquo;)
           </label>
@@ -639,7 +639,7 @@ function NotifyForm({
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             rows={5}
-            className="w-full resize-none rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+            className="w-full resize-none rounded-lg border border-[#E8DDE4] px-3 py-2 text-sm text-[#1C1424] placeholder:text-[#5B4F62]/60 focus:border-[#D6336C] focus:outline-none focus:ring-1 focus:ring-[#D6336C]"
           />
         </div>
         {error && (
@@ -649,19 +649,19 @@ function NotifyForm({
         )}
       </div>
 
-      <div className="flex items-center justify-end gap-3 border-t border-gray-100 px-6 py-4">
+      <div className="flex items-center justify-end gap-3 border-t border-[#E8DDE4] px-6 py-4">
         <button
           type="button"
           onClick={onClose}
           disabled={submitting}
-          className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 disabled:opacity-50"
+          className="rounded-[999px] border border-[#E8DDE4] bg-white px-4 py-2 text-sm font-medium text-[#1C1424] transition-colors hover:bg-[#faf4f0] disabled:opacity-50"
         >
           {closeLabel}
         </button>
         <button
           type="submit"
           disabled={submitting}
-          className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-50"
+          className="inline-flex items-center gap-1.5 rounded-[999px] bg-[#D6336C] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[#B71F56] disabled:cursor-not-allowed disabled:opacity-50"
         >
           {submitting && <Spinner />}
           {submitting ? "Sending..." : `Notify ${name.split(" ")[0] || "owner"}`}

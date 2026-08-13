@@ -39,18 +39,18 @@ export default function RequireAdmin({
 
   if (state === "loading") {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-50">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-200 border-t-indigo-600" />
+      <div className="flex min-h-screen items-center justify-center bg-[#FFFCF6]">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#E8DDE4] border-t-[#D6336C]" />
       </div>
     );
   }
 
   if (state === "forbidden") {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-50">
+      <div className="flex min-h-screen items-center justify-center bg-[#FFFCF6]">
         <div className="max-w-sm text-center">
-          <h1 className="text-xl font-semibold text-gray-900">Admins only</h1>
-          <p className="mt-2 text-sm text-gray-500">
+          <h1 className="text-xl font-semibold text-[#1C1424]">Admins only</h1>
+          <p className="mt-2 text-sm text-[#5B4F62]">
             Payout management is restricted to administrators. Contact an admin
             if you need access.
           </p>

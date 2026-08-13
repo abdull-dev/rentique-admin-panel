@@ -186,10 +186,10 @@ export default function Sidebar() {
   };
 
   return (
-    <aside className="fixed inset-y-0 left-0 z-30 flex w-64 flex-col bg-gray-900 text-white">
+    <aside className="fixed inset-y-0 left-0 z-30 flex w-64 flex-col bg-[#2D1B3D] text-white">
       {/* Logo */}
-      <div className="flex h-16 items-center gap-2 border-b border-gray-800 px-6">
-        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-500 text-sm font-bold">
+      <div className="flex h-16 items-center gap-2 border-b border-[#3D2550] px-6">
+        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#D6336C] text-sm font-bold">
           R
         </div>
         <span className="text-lg font-semibold tracking-tight">
@@ -211,8 +211,8 @@ export default function Sidebar() {
               href={item.href}
               className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
                 isActive
-                  ? "bg-gray-800 text-white"
-                  : "text-gray-400 hover:bg-gray-800 hover:text-white"
+                  ? "bg-[#D6336C]/15 text-[#FCE3ED]"
+                  : "text-[#C4A8D0] hover:bg-[#3D2550] hover:text-white"
               }`}
             >
               {item.icon}
@@ -223,10 +223,10 @@ export default function Sidebar() {
       </nav>
 
       {/* Logout */}
-      <div className="border-t border-gray-800 p-3">
+      <div className="border-t border-[#3D2550] p-3">
         <button
           onClick={handleLogout}
-          className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-400 transition-colors hover:bg-gray-800 hover:text-white"
+          className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-[#C4A8D0] transition-colors hover:bg-[#3D2550] hover:text-white"
         >
           <svg
             className="h-5 w-5"

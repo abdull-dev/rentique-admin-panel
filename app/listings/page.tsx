@@ -79,11 +79,11 @@ function getCoverImage(media?: Media[]): string | null {
 }
 
 const STATUS_STYLES: Record<string, string> = {
-  LIVE: "bg-green-100 text-green-800",
-  PAUSED: "bg-gray-100 text-gray-700",
-  DRAFT: "bg-yellow-100 text-yellow-800",
-  PENDING_REVIEW: "bg-blue-100 text-blue-800",
-  RENTED_OUT: "bg-purple-100 text-purple-800",
+  LIVE: "bg-[#DEF2E9] text-[#0A6E52]",
+  PAUSED: "bg-[#EAE1EE] text-[#4A2E57]",
+  DRAFT: "bg-[#FFF0D4] text-[#DE8E0F]",
+  PENDING_REVIEW: "bg-[#FCE3ED] text-[#B71F56]",
+  RENTED_OUT: "bg-[#EAE1EE] text-[#4A2E57]",
   REJECTED: "bg-red-100 text-red-800",
 };
 
@@ -212,32 +212,32 @@ export default function ListingsPage() {
   // -----------------------------------------------------------------------
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[#FFFCF6]">
       {/* Header */}
-      <div className="border-b border-gray-200 bg-white">
+      <div className="border-b border-[#E8DDE4] bg-white">
         <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-          <h1 className="text-2xl font-bold text-gray-900">Listings</h1>
-          <p className="mt-1 text-sm text-gray-500">
+          <h1 className="text-2xl font-bold text-[#1C1424] font-[family-name:var(--font-headline)]">Listings</h1>
+          <p className="mt-1 text-sm text-[#5B4F62]">
             Review and manage all listings on the platform.
           </p>
         </div>
       </div>
 
       {/* Tabs */}
-      <div className="border-b border-gray-200 bg-white">
+      <div className="border-b border-[#E8DDE4] bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <nav className="-mb-px flex gap-6" aria-label="Tabs">
             <button
               onClick={() => setActiveTab("pending")}
               className={`whitespace-nowrap border-b-2 px-1 py-3 text-sm font-medium transition-colors ${
                 activeTab === "pending"
-                  ? "border-indigo-600 text-indigo-600"
-                  : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                  ? "border-[#D6336C] text-[#D6336C]"
+                  : "border-transparent text-[#5B4F62] hover:border-[#E8DDE4] hover:text-[#1C1424]"
               }`}
             >
               Pending Review
               {pendingListings.length > 0 && (
-                <span className="ml-2 inline-flex items-center rounded-full bg-indigo-100 px-2 py-0.5 text-xs font-medium text-indigo-700">
+                <span className="ml-2 inline-flex items-center rounded-full bg-[#FCE3ED] px-2 py-0.5 text-xs font-medium text-[#B71F56]">
                   {pendingListings.length}
                 </span>
               )}
@@ -246,13 +246,13 @@ export default function ListingsPage() {
               onClick={() => setActiveTab("all")}
               className={`whitespace-nowrap border-b-2 px-1 py-3 text-sm font-medium transition-colors ${
                 activeTab === "all"
-                  ? "border-indigo-600 text-indigo-600"
-                  : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                  ? "border-[#D6336C] text-[#D6336C]"
+                  : "border-transparent text-[#5B4F62] hover:border-[#E8DDE4] hover:text-[#1C1424]"
               }`}
             >
               All Listings
               {total > 0 && activeTab === "all" && (
-                <span className="ml-2 inline-flex items-center rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-600">
+                <span className="ml-2 inline-flex items-center rounded-full bg-[#EAE1EE] px-2 py-0.5 text-xs font-medium text-[#5B4F62]">
                   {total}
                 </span>
               )}
@@ -320,7 +320,7 @@ function PendingTab({
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <Spinner className="h-8 w-8 text-indigo-600" />
+        <Spinner className="h-8 w-8 text-[#D6336C]" />
       </div>
     );
   }
@@ -331,7 +331,7 @@ function PendingTab({
         <p className="text-sm text-red-600">{error}</p>
         <button
           onClick={onRetry}
-          className="mt-3 rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700"
+          className="mt-3 rounded-[999px] bg-[#D6336C] px-4 py-2 text-sm font-medium text-white hover:bg-[#B71F56]"
         >
           Retry
         </button>
@@ -343,9 +343,9 @@ function PendingTab({
     return (
       <div className="flex flex-col items-center justify-center py-20 text-center">
         {/* Checkmark icon */}
-        <div className="flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
+        <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#DEF2E9]">
           <svg
-            className="h-8 w-8 text-green-600"
+            className="h-8 w-8 text-[#0E8F6B]"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -358,10 +358,10 @@ function PendingTab({
             />
           </svg>
         </div>
-        <h3 className="mt-4 text-lg font-medium text-gray-900">
+        <h3 className="mt-4 text-lg font-medium text-[#1C1424]">
           No pending listings
         </h3>
-        <p className="mt-1 text-sm text-gray-500">
+        <p className="mt-1 text-sm text-[#5B4F62]">
           All listings have been reviewed. Check back later.
         </p>
       </div>
@@ -404,9 +404,9 @@ function PendingCard({
   const imageUrl = getCoverImage(listing.media);
 
   return (
-    <div className="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
+    <div className="overflow-hidden rounded-2xl border border-[#E8DDE4] bg-white shadow-[0_1px_3px_rgba(28,20,36,0.08)]">
       {/* Image */}
-      <div className="relative h-48 w-full bg-gray-100">
+      <div className="relative h-48 w-full bg-[#faf4f0]">
         {imageUrl ? (
           <Image
             src={imageUrl}
@@ -418,7 +418,7 @@ function PendingCard({
         ) : (
           <div className="flex h-full w-full items-center justify-center">
             <svg
-              className="h-12 w-12 text-gray-300"
+              className="h-12 w-12 text-[#E8DDE4]"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -437,16 +437,16 @@ function PendingCard({
       {/* Body */}
       <div className="p-4">
         <div className="flex items-start justify-between gap-2">
-          <h3 className="text-base font-semibold text-gray-900 line-clamp-1">
+          <h3 className="text-base font-semibold text-[#1C1424] line-clamp-1">
             {listing.title}
           </h3>
-          <span className="shrink-0 text-base font-bold text-indigo-600">
+          <span className="shrink-0 text-base font-bold text-[#D6336C]">
             {formatPKR(listing.rentalPrice)}
           </span>
         </div>
 
         {listing.category && (
-          <p className="mt-1 text-xs font-medium text-gray-500">
+          <p className="mt-1 text-xs font-medium text-[#5B4F62]">
             {listing.category.name}
           </p>
         )}
@@ -463,15 +463,15 @@ function PendingCard({
                 className="rounded-full"
               />
             ) : (
-              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-gray-200 text-xs font-medium text-gray-600">
+              <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#EAE1EE] text-xs font-medium text-[#4A2E57]">
                 {(listing.owner.name ?? "?").charAt(0).toUpperCase()}
               </div>
             )}
-            <span className="text-sm text-gray-700">
+            <span className="text-sm text-[#1C1424]">
               {listing.owner.name ?? "Unknown"}
             </span>
             {listing.owner.ownerType && (
-              <span className="rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-600">
+              <span className="rounded-full bg-[#EAE1EE] px-2 py-0.5 text-xs font-medium text-[#4A2E57]">
                 {listing.owner.ownerType}
               </span>
             )}
@@ -479,13 +479,13 @@ function PendingCard({
         )}
 
         {/* Submitted date */}
-        <p className="mt-2 text-xs text-gray-400">
+        <p className="mt-2 text-xs text-[#5B4F62]/60">
           Submitted {formatDate(listing.createdAt)}
         </p>
 
         {/* Description preview */}
         {listing.description && (
-          <p className="mt-2 text-sm text-gray-600 line-clamp-2">
+          <p className="mt-2 text-sm text-[#5B4F62] line-clamp-2">
             {listing.description}
           </p>
         )}
@@ -495,7 +495,7 @@ function PendingCard({
           <button
             onClick={onApprove}
             disabled={approving || rejecting}
-            className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-md bg-green-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-green-700 disabled:opacity-60"
+            className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-[999px] bg-[#0E8F6B] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[#0A6E52] disabled:opacity-60"
           >
             {approving ? (
               <>
@@ -509,7 +509,7 @@ function PendingCard({
           <button
             onClick={onReject}
             disabled={approving || rejecting}
-            className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-md bg-red-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-red-700 disabled:opacity-60"
+            className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-[999px] bg-red-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-red-700 disabled:opacity-60"
           >
             {rejecting ? (
               <>
@@ -552,7 +552,7 @@ function AllListingsTab({
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <Spinner className="h-8 w-8 text-indigo-600" />
+        <Spinner className="h-8 w-8 text-[#D6336C]" />
       </div>
     );
   }
@@ -563,7 +563,7 @@ function AllListingsTab({
         <p className="text-sm text-red-600">{error}</p>
         <button
           onClick={onRetry}
-          className="mt-3 rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700"
+          className="mt-3 rounded-[999px] bg-[#D6336C] px-4 py-2 text-sm font-medium text-white hover:bg-[#B71F56]"
         >
           Retry
         </button>
@@ -574,8 +574,8 @@ function AllListingsTab({
   if (listings.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-20 text-center">
-        <h3 className="text-lg font-medium text-gray-900">No listings found</h3>
-        <p className="mt-1 text-sm text-gray-500">
+        <h3 className="text-lg font-medium text-[#1C1424]">No listings found</h3>
+        <p className="mt-1 text-sm text-[#5B4F62]">
           There are no listings to display.
         </p>
       </div>
@@ -585,42 +585,42 @@ function AllListingsTab({
   return (
     <div>
       {/* Table */}
-      <div className="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
+      <div className="overflow-hidden rounded-2xl border border-[#E8DDE4] bg-white shadow-[0_1px_3px_rgba(28,20,36,0.08)]">
         <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
+          <table className="min-w-full divide-y divide-[#E8DDE4]">
+            <thead className="bg-[#FFFCF6]">
               <tr>
-                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-[#5B4F62]">
                   Image
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-[#5B4F62]">
                   Title
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-[#5B4F62]">
                   Category
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-[#5B4F62]">
                   Price
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-[#5B4F62]">
                   Status
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-[#5B4F62]">
                   Owner
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-[#5B4F62]">
                   Date
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-200 bg-white">
+            <tbody className="divide-y divide-[#E8DDE4] bg-white">
               {listings.map((listing) => {
                 const imageUrl = getCoverImage(listing.media);
                 return (
-                  <tr key={listing.id} className="hover:bg-gray-50">
+                  <tr key={listing.id} className="hover:bg-[#faf4f0]">
                     {/* Image */}
                     <td className="whitespace-nowrap px-4 py-3">
-                      <div className="relative h-10 w-10 overflow-hidden rounded-md bg-gray-100">
+                      <div className="relative h-10 w-10 overflow-hidden rounded-md bg-[#faf4f0]">
                         {imageUrl ? (
                           <Image
                             src={imageUrl}
@@ -632,7 +632,7 @@ function AllListingsTab({
                         ) : (
                           <div className="flex h-full w-full items-center justify-center">
                             <svg
-                              className="h-5 w-5 text-gray-300"
+                              className="h-5 w-5 text-[#E8DDE4]"
                               fill="none"
                               viewBox="0 0 24 24"
                               stroke="currentColor"
@@ -649,15 +649,15 @@ function AllListingsTab({
                       </div>
                     </td>
                     {/* Title */}
-                    <td className="max-w-[200px] truncate px-4 py-3 text-sm font-medium text-gray-900">
+                    <td className="max-w-[200px] truncate px-4 py-3 text-sm font-medium text-[#1C1424]">
                       {listing.title}
                     </td>
                     {/* Category */}
-                    <td className="whitespace-nowrap px-4 py-3 text-sm text-gray-500">
+                    <td className="whitespace-nowrap px-4 py-3 text-sm text-[#5B4F62]">
                       {listing.category?.name ?? "-"}
                     </td>
                     {/* Price */}
-                    <td className="whitespace-nowrap px-4 py-3 text-sm font-medium text-gray-900">
+                    <td className="whitespace-nowrap px-4 py-3 text-sm font-medium text-[#1C1424]">
                       {formatPKR(listing.rentalPrice)}
                     </td>
                     {/* Status */}
@@ -665,18 +665,18 @@ function AllListingsTab({
                       <span
                         className={`inline-flex rounded-full px-2 py-0.5 text-xs font-medium ${
                           STATUS_STYLES[listing.status] ??
-                          "bg-gray-100 text-gray-700"
+                          "bg-[#EAE1EE] text-[#4A2E57]"
                         }`}
                       >
                         {statusLabel(listing.status)}
                       </span>
                     </td>
                     {/* Owner */}
-                    <td className="whitespace-nowrap px-4 py-3 text-sm text-gray-500">
+                    <td className="whitespace-nowrap px-4 py-3 text-sm text-[#5B4F62]">
                       {listing.owner?.name ?? "-"}
                     </td>
                     {/* Date */}
-                    <td className="whitespace-nowrap px-4 py-3 text-sm text-gray-500">
+                    <td className="whitespace-nowrap px-4 py-3 text-sm text-[#5B4F62]">
                       {formatDate(listing.createdAt)}
                     </td>
                   </tr>
@@ -689,7 +689,7 @@ function AllListingsTab({
 
       {/* Pagination */}
       <div className="mt-4 flex items-center justify-between">
-        <p className="text-sm text-gray-500">
+        <p className="text-sm text-[#5B4F62]">
           Showing{" "}
           <span className="font-medium">{(page - 1) * 20 + 1}</span>
           {" "}-{" "}
@@ -702,14 +702,14 @@ function AllListingsTab({
           <button
             onClick={() => onPageChange(page - 1)}
             disabled={page <= 1}
-            className="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+            className="rounded-[999px] border border-[#E8DDE4] bg-white px-4 py-2 text-sm font-medium text-[#1C1424] transition-colors hover:bg-[#faf4f0] disabled:cursor-not-allowed disabled:opacity-50"
           >
             Previous
           </button>
           <button
             onClick={() => onPageChange(page + 1)}
             disabled={page >= totalPages}
-            className="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+            className="rounded-[999px] border border-[#E8DDE4] bg-white px-4 py-2 text-sm font-medium text-[#1C1424] transition-colors hover:bg-[#faf4f0] disabled:cursor-not-allowed disabled:opacity-50"
           >
             Next
           </button>

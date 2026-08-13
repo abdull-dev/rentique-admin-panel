@@ -53,13 +53,13 @@ const ALL_STATUSES: BookingStatus[] = [
 ];
 
 const STATUS_COLORS: Record<BookingStatus, string> = {
-  REQUESTED: "bg-blue-50 text-blue-700 border border-blue-200",
-  ACCEPTED: "bg-indigo-50 text-indigo-700 border border-indigo-200",
-  PAID: "bg-emerald-50 text-emerald-700 border border-emerald-200",
-  DISPATCHED: "bg-cyan-50 text-cyan-700 border border-cyan-200",
-  ACTIVE: "bg-green-50 text-green-700 border border-green-200",
-  RETURNED: "bg-yellow-50 text-yellow-700 border border-yellow-200",
-  COMPLETED: "bg-gray-50 text-gray-600 border border-gray-200",
+  REQUESTED: "bg-[#FCE3ED] text-[#B71F56] border border-[#E8DDE4]",
+  ACCEPTED: "bg-[#EAE1EE] text-[#4A2E57] border border-[#E8DDE4]",
+  PAID: "bg-[#DEF2E9] text-[#0A6E52] border border-[#DEF2E9]",
+  DISPATCHED: "bg-[#EAE1EE] text-[#4A2E57] border border-[#E8DDE4]",
+  ACTIVE: "bg-[#DEF2E9] text-[#0E8F6B] border border-[#DEF2E9]",
+  RETURNED: "bg-[#FFF0D4] text-[#DE8E0F] border border-[#FFF0D4]",
+  COMPLETED: "bg-[#EAE1EE] text-[#5B4F62] border border-[#E8DDE4]",
   CANCELLED: "bg-red-50 text-red-600 border border-red-200",
   DISPUTED: "bg-red-100 text-red-800 border-2 border-red-400 font-bold",
 };
@@ -155,21 +155,21 @@ function ResolveModal({
       />
 
       {/* Modal */}
-      <div className="relative bg-white rounded-xl shadow-2xl w-full max-w-lg border border-gray-200">
+      <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-lg border border-[#E8DDE4]">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[#E8DDE4]">
           <div>
-            <h3 className="text-lg font-semibold text-gray-900">
+            <h3 className="text-lg font-semibold text-[#1C1424]">
               Resolve Dispute
             </h3>
-            <p className="text-sm text-gray-500 mt-0.5">
+            <p className="text-sm text-[#5B4F62] mt-0.5">
               Booking #{truncateId(booking.id)} &middot;{" "}
               {booking.listing?.title || "Unknown listing"}
             </p>
           </div>
           <button
             onClick={onClose}
-            className="p-1 rounded-md text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors"
+            className="p-1 rounded-md text-[#5B4F62]/60 hover:text-[#1C1424] hover:bg-[#faf4f0] transition-colors"
           >
             <svg
               className="w-5 h-5"
@@ -219,26 +219,26 @@ function ResolveModal({
                   Resolution Outcome
                 </label>
                 <div className="space-y-2">
-                  <label className="flex items-center gap-3 p-3 rounded-lg border border-gray-200 cursor-pointer hover:bg-gray-50 transition-colors has-[:checked]:border-green-400 has-[:checked]:bg-green-50">
+                  <label className="flex items-center gap-3 p-3 rounded-lg border border-[#E8DDE4] cursor-pointer hover:bg-[#faf4f0] transition-colors has-[:checked]:border-[#0E8F6B] has-[:checked]:bg-[#DEF2E9]/30">
                     <input
                       type="radio"
                       name="outcome"
                       value="COMPLETED"
                       checked={outcome === "COMPLETED"}
                       onChange={() => setOutcome("COMPLETED")}
-                      className="w-4 h-4 text-green-600"
+                      className="w-4 h-4 text-[#0E8F6B]"
                     />
                     <div>
-                      <p className="text-sm font-medium text-gray-900">
+                      <p className="text-sm font-medium text-[#1C1424]">
                         Complete (release payment to owner)
                       </p>
-                      <p className="text-xs text-gray-500 mt-0.5">
+                      <p className="text-xs text-[#5B4F62] mt-0.5">
                         The rental was fulfilled. Payment will be released to the
                         owner.
                       </p>
                     </div>
                   </label>
-                  <label className="flex items-center gap-3 p-3 rounded-lg border border-gray-200 cursor-pointer hover:bg-gray-50 transition-colors has-[:checked]:border-red-400 has-[:checked]:bg-red-50">
+                  <label className="flex items-center gap-3 p-3 rounded-lg border border-[#E8DDE4] cursor-pointer hover:bg-[#faf4f0] transition-colors has-[:checked]:border-red-400 has-[:checked]:bg-red-50">
                     <input
                       type="radio"
                       name="outcome"
@@ -248,10 +248,10 @@ function ResolveModal({
                       className="w-4 h-4 text-red-600"
                     />
                     <div>
-                      <p className="text-sm font-medium text-gray-900">
+                      <p className="text-sm font-medium text-[#1C1424]">
                         Cancel (refund renter)
                       </p>
-                      <p className="text-xs text-gray-500 mt-0.5">
+                      <p className="text-xs text-[#5B4F62] mt-0.5">
                         The rental failed. A refund will be issued to the renter.
                       </p>
                     </div>
@@ -276,9 +276,9 @@ function ResolveModal({
                     value={damageDeduction}
                     onChange={(e) => setDamageDeduction(e.target.value)}
                     placeholder="0"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-2 border border-[#E8DDE4] rounded-lg text-sm text-[#1C1424] placeholder:text-[#5B4F62]/60 focus:outline-none focus:ring-2 focus:ring-[#D6336C] focus:border-[#D6336C]"
                   />
-                  <p className="text-xs text-gray-500 mt-1">
+                  <p className="text-xs text-[#5B4F62] mt-1">
                     Amount to deduct from the security deposit for damages, if any.
                   </p>
                 </div>
@@ -298,7 +298,7 @@ function ResolveModal({
                   onChange={(e) => setNote(e.target.value)}
                   rows={3}
                   placeholder="Add a resolution note..."
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none"
+                  className="w-full px-3 py-2 border border-[#E8DDE4] rounded-lg text-sm text-[#1C1424] placeholder:text-[#5B4F62]/60 focus:outline-none focus:ring-2 focus:ring-[#D6336C] focus:border-[#D6336C] resize-none"
                 />
               </div>
 
@@ -311,21 +311,21 @@ function ResolveModal({
             </div>
 
             {/* Footer */}
-            <div className="flex items-center justify-end gap-3 px-6 py-4 border-t border-gray-100">
+            <div className="flex items-center justify-end gap-3 px-6 py-4 border-t border-[#E8DDE4]">
               <button
                 type="button"
                 onClick={onClose}
                 disabled={submitting}
-                className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50"
+                className="px-4 py-2 text-sm font-medium text-[#1C1424] bg-white border border-[#E8DDE4] rounded-[999px] hover:bg-[#faf4f0] transition-colors disabled:opacity-50"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={submitting}
-                className={`px-4 py-2 text-sm font-medium text-white rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${
+                className={`px-4 py-2 text-sm font-medium text-white rounded-[999px] transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${
                   outcome === "COMPLETED"
-                    ? "bg-green-600 hover:bg-green-700"
+                    ? "bg-[#0E8F6B] hover:bg-[#0A6E52]"
                     : "bg-red-600 hover:bg-red-700"
                 }`}
               >
@@ -445,55 +445,55 @@ export default function BookingsPage() {
   // ─── Render ─────────────────────────────────────────────────────────
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[#FFFCF6]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-2xl font-bold text-gray-900">
+          <h1 className="text-2xl font-bold text-[#1C1424] font-[family-name:var(--font-headline)]">
             Bookings Management
           </h1>
-          <p className="text-sm text-gray-500 mt-1">
+          <p className="text-sm text-[#5B4F62] mt-1">
             View and manage all platform bookings and resolve disputes.
           </p>
         </div>
 
         {/* Stats Bar */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-          <div className="bg-white rounded-lg border border-gray-200 px-5 py-4">
-            <p className="text-xs font-medium text-gray-500 uppercase tracking-wide">
+          <div className="bg-white rounded-2xl border border-[#E8DDE4] px-5 py-4">
+            <p className="text-xs font-medium text-[#5B4F62] uppercase tracking-wide">
               Total Bookings
             </p>
-            <p className="text-2xl font-bold text-gray-900 mt-1">
+            <p className="text-2xl font-bold text-[#1C1424] mt-1">
               {totalCount.toLocaleString()}
             </p>
           </div>
           <div
-            className={`rounded-lg border px-5 py-4 ${
+            className={`rounded-2xl border px-5 py-4 ${
               disputedCount > 0
                 ? "bg-red-50 border-red-200"
-                : "bg-white border-gray-200"
+                : "bg-white border-[#E8DDE4]"
             }`}
           >
             <p
               className={`text-xs font-medium uppercase tracking-wide ${
-                disputedCount > 0 ? "text-red-600" : "text-gray-500"
+                disputedCount > 0 ? "text-red-600" : "text-[#5B4F62]"
               }`}
             >
               Disputed
             </p>
             <p
               className={`text-2xl font-bold mt-1 ${
-                disputedCount > 0 ? "text-red-700" : "text-gray-900"
+                disputedCount > 0 ? "text-red-700" : "text-[#1C1424]"
               }`}
             >
               {disputedCount}
             </p>
           </div>
-          <div className="bg-white rounded-lg border border-gray-200 px-5 py-4">
-            <p className="text-xs font-medium text-gray-500 uppercase tracking-wide">
+          <div className="bg-white rounded-2xl border border-[#E8DDE4] px-5 py-4">
+            <p className="text-xs font-medium text-[#5B4F62] uppercase tracking-wide">
               Active
             </p>
-            <p className="text-2xl font-bold text-green-700 mt-1">{activeCount}</p>
+            <p className="text-2xl font-bold text-[#0E8F6B] mt-1">{activeCount}</p>
           </div>
         </div>
 
@@ -533,8 +533,8 @@ export default function BookingsPage() {
             onClick={() => handleStatusChange("ALL")}
             className={`px-4 py-2 text-xs font-semibold rounded-full whitespace-nowrap transition-colors ${
               activeStatus === "ALL"
-                ? "bg-gray-900 text-white"
-                : "bg-white text-gray-600 border border-gray-300 hover:bg-gray-100"
+                ? "bg-[#1C1424] text-white"
+                : "bg-white text-[#5B4F62] border border-[#E8DDE4] hover:bg-[#faf4f0]"
             }`}
           >
             All
@@ -551,10 +551,10 @@ export default function BookingsPage() {
                   isActive
                     ? isDisputed
                       ? "bg-red-600 text-white"
-                      : "bg-gray-900 text-white"
+                      : "bg-[#D6336C] text-white"
                     : isDisputed && disputedCount > 0
                       ? "bg-red-50 text-red-700 border border-red-300 hover:bg-red-100"
-                      : "bg-white text-gray-600 border border-gray-300 hover:bg-gray-100"
+                      : "bg-white text-[#5B4F62] border border-[#E8DDE4] hover:bg-[#faf4f0]"
                 }`}
               >
                 {status.charAt(0) + status.slice(1).toLowerCase()}
@@ -566,23 +566,23 @@ export default function BookingsPage() {
         {/* Content */}
         {loading ? (
           <div className="flex flex-col items-center justify-center py-20">
-            <div className="w-8 h-8 border-[3px] border-gray-200 border-t-gray-800 rounded-full animate-spin" />
-            <p className="text-sm text-gray-500 mt-4">Loading bookings...</p>
+            <div className="w-8 h-8 border-[3px] border-[#E8DDE4] border-t-[#D6336C] rounded-full animate-spin" />
+            <p className="text-sm text-[#5B4F62] mt-4">Loading bookings...</p>
           </div>
         ) : error ? (
-          <div className="bg-white rounded-lg border border-red-200 p-8 text-center">
+          <div className="bg-white rounded-2xl border border-red-200 p-8 text-center">
             <p className="text-sm text-red-600 mb-3">{error}</p>
             <button
               onClick={fetchBookings}
-              className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+              className="px-4 py-2 text-sm font-medium text-[#1C1424] bg-white border border-[#E8DDE4] rounded-[999px] hover:bg-[#faf4f0] transition-colors"
             >
               Retry
             </button>
           </div>
         ) : bookings.length === 0 ? (
-          <div className="bg-white rounded-lg border border-gray-200 p-16 text-center">
+          <div className="bg-white rounded-2xl border border-[#E8DDE4] p-16 text-center">
             <svg
-              className="w-12 h-12 text-gray-300 mx-auto mb-4"
+              className="w-12 h-12 text-[#E8DDE4] mx-auto mb-4"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -594,42 +594,42 @@ export default function BookingsPage() {
                 d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
               />
             </svg>
-            <p className="text-sm text-gray-500">No bookings found.</p>
+            <p className="text-sm text-[#5B4F62]">No bookings found.</p>
           </div>
         ) : (
           <>
             {/* Table */}
-            <div className="w-full bg-white rounded-lg border border-gray-200 overflow-hidden">
+            <div className="w-full bg-white rounded-2xl border border-[#E8DDE4] overflow-hidden">
               {/* Table header */}
-              <div className="hidden lg:grid grid-cols-[100px_1fr_120px_120px_180px_120px_110px_90px] gap-4 px-5 py-3 bg-gray-50 border-b border-gray-200">
-                <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
+              <div className="hidden lg:grid grid-cols-[100px_1fr_120px_120px_180px_120px_110px_90px] gap-4 px-5 py-3 bg-[#FFFCF6] border-b border-[#E8DDE4]">
+                <span className="text-xs font-semibold text-[#5B4F62] uppercase tracking-wide">
                   ID
                 </span>
-                <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
+                <span className="text-xs font-semibold text-[#5B4F62] uppercase tracking-wide">
                   Listing
                 </span>
-                <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
+                <span className="text-xs font-semibold text-[#5B4F62] uppercase tracking-wide">
                   Renter
                 </span>
-                <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
+                <span className="text-xs font-semibold text-[#5B4F62] uppercase tracking-wide">
                   Owner
                 </span>
-                <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
+                <span className="text-xs font-semibold text-[#5B4F62] uppercase tracking-wide">
                   Dates
                 </span>
-                <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
+                <span className="text-xs font-semibold text-[#5B4F62] uppercase tracking-wide">
                   Amount
                 </span>
-                <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
+                <span className="text-xs font-semibold text-[#5B4F62] uppercase tracking-wide">
                   Status
                 </span>
-                <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
+                <span className="text-xs font-semibold text-[#5B4F62] uppercase tracking-wide">
                   Actions
                 </span>
               </div>
 
               {/* Rows */}
-              <div className="divide-y divide-gray-100">
+              <div className="divide-y divide-[#E8DDE4]">
                 {bookings.map((booking) => {
                   const isExpanded = expandedId === booking.id;
                   const isDisputed = booking.status === "DISPUTED";
@@ -642,40 +642,40 @@ export default function BookingsPage() {
                       {/* Row */}
                       <button
                         onClick={() => handleRowClick(booking.id)}
-                        className="w-full text-left grid grid-cols-1 lg:grid-cols-[100px_1fr_120px_120px_180px_120px_110px_90px] gap-2 lg:gap-4 items-center px-5 py-3.5 hover:bg-gray-50 transition-colors"
+                        className="w-full text-left grid grid-cols-1 lg:grid-cols-[100px_1fr_120px_120px_180px_120px_110px_90px] gap-2 lg:gap-4 items-center px-5 py-3.5 hover:bg-[#faf4f0] transition-colors"
                       >
                         {/* ID */}
-                        <span className="text-xs font-mono text-gray-500">
-                          <span className="lg:hidden text-gray-400 mr-1">
+                        <span className="text-xs font-mono text-[#5B4F62]">
+                          <span className="lg:hidden text-[#5B4F62]/60 mr-1">
                             ID:
                           </span>
                           {truncateId(booking.id)}
                         </span>
 
                         {/* Listing */}
-                        <span className="text-sm text-gray-900 font-medium truncate">
+                        <span className="text-sm text-[#1C1424] font-medium truncate">
                           {booking.listing?.title || "Unknown"}
                         </span>
 
                         {/* Renter */}
-                        <span className="text-sm text-gray-600 truncate">
-                          <span className="lg:hidden text-gray-400 mr-1">
+                        <span className="text-sm text-[#5B4F62] truncate">
+                          <span className="lg:hidden text-[#5B4F62]/60 mr-1">
                             Renter:
                           </span>
                           {booking.renter?.name || "---"}
                         </span>
 
                         {/* Owner */}
-                        <span className="text-sm text-gray-600 truncate">
-                          <span className="lg:hidden text-gray-400 mr-1">
+                        <span className="text-sm text-[#5B4F62] truncate">
+                          <span className="lg:hidden text-[#5B4F62]/60 mr-1">
                             Owner:
                           </span>
                           {booking.owner?.name || "---"}
                         </span>
 
                         {/* Dates */}
-                        <span className="text-sm text-gray-600">
-                          <span className="lg:hidden text-gray-400 mr-1">
+                        <span className="text-sm text-[#5B4F62]">
+                          <span className="lg:hidden text-[#5B4F62]/60 mr-1">
                             Dates:
                           </span>
                           {booking.startDate && booking.endDate
@@ -684,8 +684,8 @@ export default function BookingsPage() {
                         </span>
 
                         {/* Amount */}
-                        <span className="text-sm font-medium text-gray-900">
-                          <span className="lg:hidden text-gray-400 mr-1 font-normal">
+                        <span className="text-sm font-medium text-[#1C1424]">
+                          <span className="lg:hidden text-[#5B4F62]/60 mr-1 font-normal">
                             Amount:
                           </span>
                           {formatPKR(booking.rentalAmount)}
@@ -712,7 +712,7 @@ export default function BookingsPage() {
                             </span>
                           ) : (
                             <svg
-                              className={`w-4 h-4 text-gray-400 transition-transform ${
+                              className={`w-4 h-4 text-[#5B4F62]/60 transition-transform ${
                                 isExpanded ? "rotate-180" : ""
                               }`}
                               fill="none"
@@ -732,53 +732,53 @@ export default function BookingsPage() {
 
                       {/* Expanded details */}
                       {isExpanded && (
-                        <div className="px-5 pb-4 pt-1 border-t border-gray-100 bg-gray-50/50">
+                        <div className="px-5 pb-4 pt-1 border-t border-[#E8DDE4] bg-[#FFFCF6]/50">
                           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 py-3">
                             <div>
-                              <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">
+                              <p className="text-xs font-medium text-[#5B4F62] uppercase tracking-wide mb-1">
                                 Booking ID
                               </p>
-                              <p className="text-sm text-gray-900 font-mono break-all">
+                              <p className="text-sm text-[#1C1424] font-mono break-all">
                                 {booking.id}
                               </p>
                             </div>
                             <div>
-                              <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">
+                              <p className="text-xs font-medium text-[#5B4F62] uppercase tracking-wide mb-1">
                                 Listing ID
                               </p>
-                              <p className="text-sm text-gray-900 font-mono break-all">
+                              <p className="text-sm text-[#1C1424] font-mono break-all">
                                 {booking.listingId}
                               </p>
                             </div>
                             <div>
-                              <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">
+                              <p className="text-xs font-medium text-[#5B4F62] uppercase tracking-wide mb-1">
                                 Rental Amount
                               </p>
-                              <p className="text-sm text-gray-900 font-medium">
+                              <p className="text-sm text-[#1C1424] font-medium">
                                 {formatPKR(booking.rentalAmount)}
                               </p>
                             </div>
                             <div>
-                              <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">
+                              <p className="text-xs font-medium text-[#5B4F62] uppercase tracking-wide mb-1">
                                 Security Deposit
                               </p>
-                              <p className="text-sm text-gray-900 font-medium">
+                              <p className="text-sm text-[#1C1424] font-medium">
                                 {formatPKR(booking.depositAmount)}
                               </p>
                             </div>
                             <div>
-                              <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">
+                              <p className="text-xs font-medium text-[#5B4F62] uppercase tracking-wide mb-1">
                                 Cleaning Fee
                               </p>
-                              <p className="text-sm text-gray-900 font-medium">
+                              <p className="text-sm text-[#1C1424] font-medium">
                                 {formatPKR(booking.cleaningFee)}
                               </p>
                             </div>
                             <div>
-                              <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">
+                              <p className="text-xs font-medium text-[#5B4F62] uppercase tracking-wide mb-1">
                                 Created
                               </p>
-                              <p className="text-sm text-gray-900">
+                              <p className="text-sm text-[#1C1424]">
                                 {booking.createdAt
                                   ? new Date(
                                       booking.createdAt
@@ -793,26 +793,26 @@ export default function BookingsPage() {
                               </p>
                             </div>
                             <div>
-                              <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">
+                              <p className="text-xs font-medium text-[#5B4F62] uppercase tracking-wide mb-1">
                                 Renter
                               </p>
-                              <p className="text-sm text-gray-900">
+                              <p className="text-sm text-[#1C1424]">
                                 {booking.renter?.name || "---"}
                                 {booking.renter?.id && (
-                                  <span className="text-xs text-gray-400 ml-1 font-mono">
+                                  <span className="text-xs text-[#5B4F62]/60 ml-1 font-mono">
                                     ({truncateId(booking.renter.id)})
                                   </span>
                                 )}
                               </p>
                             </div>
                             <div>
-                              <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">
+                              <p className="text-xs font-medium text-[#5B4F62] uppercase tracking-wide mb-1">
                                 Owner
                               </p>
-                              <p className="text-sm text-gray-900">
+                              <p className="text-sm text-[#1C1424]">
                                 {booking.owner?.name || "---"}
                                 {booking.owner?.id && (
-                                  <span className="text-xs text-gray-400 ml-1 font-mono">
+                                  <span className="text-xs text-[#5B4F62]/60 ml-1 font-mono">
                                     ({truncateId(booking.owner.id)})
                                   </span>
                                 )}
@@ -822,10 +822,10 @@ export default function BookingsPage() {
 
                           {/* Resolve button in expanded view for disputed */}
                           {isDisputed && (
-                            <div className="mt-3 pt-3 border-t border-gray-200">
+                            <div className="mt-3 pt-3 border-t border-[#E8DDE4]">
                               <button
                                 onClick={() => setResolvingBooking(booking)}
-                                className="px-4 py-2 text-sm font-semibold text-white bg-red-600 rounded-lg hover:bg-red-700 transition-colors"
+                                className="px-4 py-2 text-sm font-semibold text-white bg-red-600 rounded-[999px] hover:bg-red-700 transition-colors"
                               >
                                 Resolve Dispute
                               </button>
@@ -841,7 +841,7 @@ export default function BookingsPage() {
 
             {/* Pagination */}
             <div className="flex items-center justify-between mt-5">
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-[#5B4F62]">
                 Page {page} of {totalPages} &middot; {total} result
                 {total !== 1 ? "s" : ""}
               </p>
@@ -849,14 +849,14 @@ export default function BookingsPage() {
                 <button
                   onClick={() => setPage((p) => Math.max(1, p - 1))}
                   disabled={page <= 1}
-                  className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                  className="px-4 py-2 text-sm font-medium text-[#1C1424] bg-white border border-[#E8DDE4] rounded-[999px] hover:bg-[#faf4f0] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
                 >
                   Previous
                 </button>
                 <button
                   onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                   disabled={page >= totalPages}
-                  className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                  className="px-4 py-2 text-sm font-medium text-[#1C1424] bg-white border border-[#E8DDE4] rounded-[999px] hover:bg-[#faf4f0] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
                 >
                   Next
                 </button>

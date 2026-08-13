@@ -46,28 +46,28 @@ const ALL_KYC: KycStatus[] = ["NONE", "PENDING", "VERIFIED", "REJECTED"];
 function roleBadgeColor(role: string) {
   const map: Record<string, string> = {
     ADMIN: "bg-red-100 text-red-800",
-    MODERATOR: "bg-purple-100 text-purple-800",
-    OWNER: "bg-blue-100 text-blue-800",
-    RENTER: "bg-green-100 text-green-800",
-    CONCIERGE: "bg-yellow-100 text-yellow-800",
+    MODERATOR: "bg-[#EAE1EE] text-[#4A2E57]",
+    OWNER: "bg-[#FCE3ED] text-[#B71F56]",
+    RENTER: "bg-[#DEF2E9] text-[#0A6E52]",
+    CONCIERGE: "bg-[#FFF0D4] text-[#DE8E0F]",
   };
-  return map[role] ?? "bg-gray-100 text-gray-800";
+  return map[role] ?? "bg-[#EAE1EE] text-[#4A2E57]";
 }
 
 function statusBadgeColor(status: string) {
   return status === "ACTIVE"
-    ? "bg-green-100 text-green-800"
+    ? "bg-[#DEF2E9] text-[#0A6E52]"
     : "bg-red-100 text-red-800";
 }
 
 function kycBadgeColor(kyc: string) {
   const map: Record<string, string> = {
-    VERIFIED: "bg-green-100 text-green-800",
-    PENDING: "bg-yellow-100 text-yellow-800",
+    VERIFIED: "bg-[#DEF2E9] text-[#0A6E52]",
+    PENDING: "bg-[#FFF0D4] text-[#DE8E0F]",
     REJECTED: "bg-red-100 text-red-800",
-    NONE: "bg-gray-100 text-gray-600",
+    NONE: "bg-[#EAE1EE] text-[#5B4F62]",
   };
-  return map[kyc] ?? "bg-gray-100 text-gray-600";
+  return map[kyc] ?? "bg-[#EAE1EE] text-[#5B4F62]";
 }
 
 function initials(profile: Profile) {
@@ -179,20 +179,20 @@ export default function UsersPage() {
     profile?.fullName ?? profile?.name ?? profile?.email ?? "Unknown";
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6 md:p-10">
+    <div className="min-h-screen bg-[#FFFCF6] p-6 md:p-10">
       <div className="mx-auto max-w-2xl space-y-6">
         {/* Header */}
-        <h1 className="text-2xl font-bold text-gray-900">User Management</h1>
+        <h1 className="text-2xl font-bold text-[#1C1424] font-[family-name:var(--font-headline)]">User Management</h1>
 
         {/* Search */}
         <form
           onSubmit={handleSearch}
-          className="flex flex-col gap-3 rounded-lg bg-white p-5 shadow sm:flex-row sm:items-end"
+          className="flex flex-col gap-3 rounded-2xl bg-white p-5 shadow-[0_1px_3px_rgba(28,20,36,0.08)] border border-[#E8DDE4] sm:flex-row sm:items-end"
         >
           <div className="flex-1">
             <label
               htmlFor="uid"
-              className="mb-1 block text-sm font-medium text-gray-700"
+              className="mb-1 block text-sm font-medium text-[#1C1424]"
             >
               User ID
             </label>
@@ -202,13 +202,13 @@ export default function UsersPage() {
               placeholder="Enter UUID..."
               value={userId}
               onChange={(e) => setUserId(e.target.value)}
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+              className="w-full rounded-lg border border-[#E8DDE4] px-3 py-2 text-sm shadow-sm focus:border-[#D6336C] focus:ring-1 focus:ring-[#D6336C] focus:outline-none text-[#1C1424]"
             />
           </div>
           <button
             type="submit"
             disabled={searching || !userId.trim()}
-            className="rounded-md bg-blue-600 px-5 py-2 text-sm font-medium text-white shadow hover:bg-blue-700 disabled:opacity-50"
+            className="rounded-[999px] bg-[#D6336C] px-5 py-2 text-sm font-medium text-white shadow hover:bg-[#B71F56] disabled:opacity-50"
           >
             {searching ? "Searching..." : "Look up User"}
           </button>
@@ -216,14 +216,14 @@ export default function UsersPage() {
 
         {/* Error */}
         {searchError && (
-          <div className="rounded-md bg-red-50 p-4 text-sm text-red-700">
+          <div className="rounded-lg bg-red-50 p-4 text-sm text-red-700">
             {searchError}
           </div>
         )}
 
         {/* Profile card */}
         {profile && (
-          <div className="rounded-lg bg-white p-6 shadow">
+          <div className="rounded-2xl bg-white p-6 shadow-[0_1px_3px_rgba(28,20,36,0.08)] border border-[#E8DDE4]">
             <div className="flex items-start gap-4">
               {/* Avatar */}
               {profile.avatarUrl ? (
@@ -233,17 +233,17 @@ export default function UsersPage() {
                   className="h-16 w-16 rounded-full object-cover"
                 />
               ) : (
-                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-blue-100 text-lg font-bold text-blue-700">
+                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#FCE3ED] text-lg font-bold text-[#B71F56]">
                   {initials(profile)}
                 </div>
               )}
 
               <div className="min-w-0 flex-1">
-                <h2 className="text-lg font-semibold text-gray-900">
+                <h2 className="text-lg font-semibold text-[#1C1424]">
                   {displayName}
                 </h2>
                 {profile.email && (
-                  <p className="text-sm text-gray-500">{profile.email}</p>
+                  <p className="text-sm text-[#5B4F62]">{profile.email}</p>
                 )}
 
                 {/* Role badges */}
@@ -261,7 +261,7 @@ export default function UsersPage() {
                 {/* Status badges */}
                 <div className="mt-2 flex flex-wrap gap-1.5">
                   {profile.ownerType && (
-                    <span className="inline-block rounded-full bg-blue-50 px-2.5 py-0.5 text-xs font-medium text-blue-700">
+                    <span className="inline-block rounded-full bg-[#EAE1EE] px-2.5 py-0.5 text-xs font-medium text-[#4A2E57]">
                       {profile.ownerType}
                     </span>
                   )}
@@ -284,36 +284,36 @@ export default function UsersPage() {
             </div>
 
             {/* Details */}
-            <div className="mt-5 grid grid-cols-2 gap-x-6 gap-y-2 border-t pt-4 text-sm">
+            <div className="mt-5 grid grid-cols-2 gap-x-6 gap-y-2 border-t border-[#E8DDE4] pt-4 text-sm">
               {profile.phone && (
                 <div>
-                  <span className="font-medium text-gray-500">Phone</span>
-                  <p className="text-gray-900">{profile.phone}</p>
+                  <span className="font-medium text-[#5B4F62]">Phone</span>
+                  <p className="text-[#1C1424]">{profile.phone}</p>
                 </div>
               )}
               {profile.city && (
                 <div>
-                  <span className="font-medium text-gray-500">City</span>
-                  <p className="text-gray-900">{profile.city}</p>
+                  <span className="font-medium text-[#5B4F62]">City</span>
+                  <p className="text-[#1C1424]">{profile.city}</p>
                 </div>
               )}
               {profile.country && (
                 <div>
-                  <span className="font-medium text-gray-500">Country</span>
-                  <p className="text-gray-900">{profile.country}</p>
+                  <span className="font-medium text-[#5B4F62]">Country</span>
+                  <p className="text-[#1C1424]">{profile.country}</p>
                 </div>
               )}
               {profile.createdAt && (
                 <div>
-                  <span className="font-medium text-gray-500">Joined</span>
-                  <p className="text-gray-900">
+                  <span className="font-medium text-[#5B4F62]">Joined</span>
+                  <p className="text-[#1C1424]">
                     {new Date(profile.createdAt).toLocaleDateString()}
                   </p>
                 </div>
               )}
               <div>
-                <span className="font-medium text-gray-500">ID</span>
-                <p className="break-all font-mono text-xs text-gray-700">
+                <span className="font-medium text-[#5B4F62]">ID</span>
+                <p className="break-all font-mono text-xs text-[#1C1424]">
                   {profile.id}
                 </p>
               </div>
@@ -323,21 +323,21 @@ export default function UsersPage() {
 
         {/* Edit panel */}
         {profile && (
-          <div className="space-y-5 rounded-lg bg-white p-6 shadow">
-            <h3 className="text-lg font-semibold text-gray-900">
+          <div className="space-y-5 rounded-2xl bg-white p-6 shadow-[0_1px_3px_rgba(28,20,36,0.08)] border border-[#E8DDE4]">
+            <h3 className="text-lg font-semibold text-[#1C1424]">
               Edit User Settings
             </h3>
 
             {/* Roles */}
             <fieldset>
-              <legend className="mb-2 text-sm font-medium text-gray-700">
+              <legend className="mb-2 text-sm font-medium text-[#1C1424]">
                 Roles
               </legend>
               <div className="flex flex-wrap gap-4">
                 {ALL_ROLES.map((role) => (
                   <label
                     key={role}
-                    className="flex items-center gap-2 text-sm text-gray-800"
+                    className="flex items-center gap-2 text-sm text-[#1C1424]"
                   >
                     <input
                       type="checkbox"
@@ -349,7 +349,7 @@ export default function UsersPage() {
                             : prev.filter((r) => r !== role),
                         );
                       }}
-                      className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                      className="h-4 w-4 rounded border-[#E8DDE4] text-[#D6336C] focus:ring-[#D6336C]"
                     />
                     {role}
                   </label>
@@ -360,21 +360,21 @@ export default function UsersPage() {
             {/* Owner Type (only when OWNER selected) */}
             {editRoles.includes("OWNER") && (
               <fieldset>
-                <legend className="mb-2 text-sm font-medium text-gray-700">
+                <legend className="mb-2 text-sm font-medium text-[#1C1424]">
                   Owner Type
                 </legend>
                 <div className="flex flex-wrap gap-4">
                   {ALL_OWNER_TYPES.map((ot) => (
                     <label
                       key={ot}
-                      className="flex items-center gap-2 text-sm text-gray-800"
+                      className="flex items-center gap-2 text-sm text-[#1C1424]"
                     >
                       <input
                         type="radio"
                         name="ownerType"
                         checked={editOwnerType === ot}
                         onChange={() => setEditOwnerType(ot)}
-                        className="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500"
+                        className="h-4 w-4 border-[#E8DDE4] text-[#D6336C] focus:ring-[#D6336C]"
                       />
                       {ot}
                     </label>
@@ -385,21 +385,21 @@ export default function UsersPage() {
 
             {/* Status */}
             <fieldset>
-              <legend className="mb-2 text-sm font-medium text-gray-700">
+              <legend className="mb-2 text-sm font-medium text-[#1C1424]">
                 Status
               </legend>
               <div className="flex flex-wrap gap-4">
                 {ALL_STATUSES.map((s) => (
                   <label
                     key={s}
-                    className="flex items-center gap-2 text-sm text-gray-800"
+                    className="flex items-center gap-2 text-sm text-[#1C1424]"
                   >
                     <input
                       type="radio"
                       name="status"
                       checked={editStatus === s}
                       onChange={() => setEditStatus(s)}
-                      className="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500"
+                      className="h-4 w-4 border-[#E8DDE4] text-[#D6336C] focus:ring-[#D6336C]"
                     />
                     {s}
                   </label>
@@ -409,21 +409,21 @@ export default function UsersPage() {
 
             {/* KYC Status */}
             <fieldset>
-              <legend className="mb-2 text-sm font-medium text-gray-700">
+              <legend className="mb-2 text-sm font-medium text-[#1C1424]">
                 KYC Status
               </legend>
               <div className="flex flex-wrap gap-4">
                 {ALL_KYC.map((k) => (
                   <label
                     key={k}
-                    className="flex items-center gap-2 text-sm text-gray-800"
+                    className="flex items-center gap-2 text-sm text-[#1C1424]"
                   >
                     <input
                       type="radio"
                       name="kycStatus"
                       checked={editKyc === k}
                       onChange={() => setEditKyc(k)}
-                      className="h-4 w-4 border-gray-300 text-blue-600 focus:ring-blue-500"
+                      className="h-4 w-4 border-[#E8DDE4] text-[#D6336C] focus:ring-[#D6336C]"
                     />
                     {k}
                   </label>
@@ -432,11 +432,11 @@ export default function UsersPage() {
             </fieldset>
 
             {/* Save */}
-            <div className="flex justify-end border-t pt-4">
+            <div className="flex justify-end border-t border-[#E8DDE4] pt-4">
               <button
                 onClick={handleSave}
                 disabled={saving}
-                className="rounded-md bg-blue-600 px-6 py-2 text-sm font-medium text-white shadow hover:bg-blue-700 disabled:opacity-50"
+                className="rounded-[999px] bg-[#D6336C] px-6 py-2 text-sm font-medium text-white shadow hover:bg-[#B71F56] disabled:opacity-50"
               >
                 {saving ? "Saving..." : "Save Changes"}
               </button>
@@ -449,7 +449,7 @@ export default function UsersPage() {
       {toast && (
         <div
           className={`fixed right-6 bottom-6 rounded-lg px-5 py-3 text-sm font-medium text-white shadow-lg transition-opacity ${
-            toast.type === "success" ? "bg-green-600" : "bg-red-600"
+            toast.type === "success" ? "bg-[#0E8F6B]" : "bg-[#D6336C]"
           }`}
         >
           {toast.message}

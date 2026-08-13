@@ -30,8 +30,8 @@ function ownerName(a: AdminPayoutAccount): string {
 }
 
 const STATUS_STYLES: Record<PayoutAccountStatus, string> = {
-  UNVERIFIED: "bg-yellow-100 text-yellow-800",
-  VERIFIED: "bg-green-100 text-green-800",
+  UNVERIFIED: "bg-[#FFF0D4] text-[#DE8E0F]",
+  VERIFIED: "bg-[#DEF2E9] text-[#0A6E52]",
   REJECTED: "bg-red-100 text-red-800",
 };
 
@@ -150,31 +150,31 @@ function PayoutAccountsContent() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="border-b border-gray-200 bg-white">
+    <div className="min-h-screen bg-[#FFFCF6]">
+      <div className="border-b border-[#E8DDE4] bg-white">
         <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-          <h1 className="text-2xl font-bold text-gray-900">Payout Accounts</h1>
-          <p className="mt-1 text-sm text-gray-500">
+          <h1 className="text-2xl font-bold text-[#1C1424] font-[family-name:var(--font-headline)]">Payout Accounts</h1>
+          <p className="mt-1 text-sm text-[#5B4F62]">
             Verify owners&apos; bank and wallet details before they can be paid.
           </p>
         </div>
       </div>
 
       {/* Tabs */}
-      <div className="border-b border-gray-200 bg-white">
+      <div className="border-b border-[#E8DDE4] bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <nav className="-mb-px flex gap-6" aria-label="Tabs">
             <button
               onClick={() => setActiveTab("pending")}
               className={`whitespace-nowrap border-b-2 px-1 py-3 text-sm font-medium transition-colors ${
                 activeTab === "pending"
-                  ? "border-indigo-600 text-indigo-600"
-                  : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                  ? "border-[#D6336C] text-[#D6336C]"
+                  : "border-transparent text-[#5B4F62] hover:border-[#E8DDE4] hover:text-[#1C1424]"
               }`}
             >
               Awaiting Verification
               {pending.length > 0 && (
-                <span className="ml-2 inline-flex items-center rounded-full bg-indigo-100 px-2 py-0.5 text-xs font-medium text-indigo-700">
+                <span className="ml-2 inline-flex items-center rounded-full bg-[#FCE3ED] px-2 py-0.5 text-xs font-medium text-[#B71F56]">
                   {pending.length}
                 </span>
               )}
@@ -183,8 +183,8 @@ function PayoutAccountsContent() {
               onClick={() => setActiveTab("all")}
               className={`whitespace-nowrap border-b-2 px-1 py-3 text-sm font-medium transition-colors ${
                 activeTab === "all"
-                  ? "border-indigo-600 text-indigo-600"
-                  : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                  ? "border-[#D6336C] text-[#D6336C]"
+                  : "border-transparent text-[#5B4F62] hover:border-[#E8DDE4] hover:text-[#1C1424]"
               }`}
             >
               All Accounts
@@ -253,11 +253,11 @@ function Detail({
 }) {
   return (
     <div>
-      <dt className="text-xs font-medium uppercase tracking-wide text-gray-400">
+      <dt className="text-xs font-medium uppercase tracking-wide text-[#5B4F62]/60">
         {label}
       </dt>
       <dd
-        className={`text-gray-900 ${mono ? "font-mono text-xs" : ""}`}
+        className={`text-[#1C1424] ${mono ? "font-mono text-xs" : ""}`}
       >
         {value || "—"}
       </dd>
@@ -291,7 +291,7 @@ function PendingTab({
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <Spinner className="h-8 w-8 text-indigo-600" />
+        <Spinner className="h-8 w-8 text-[#D6336C]" />
       </div>
     );
   }
@@ -301,7 +301,7 @@ function PendingTab({
         <p className="text-sm text-red-600">{error}</p>
         <button
           onClick={onRetry}
-          className="mt-3 rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700"
+          className="mt-3 rounded-[999px] bg-[#D6336C] px-4 py-2 text-sm font-medium text-white hover:bg-[#B71F56]"
         >
           Retry
         </button>
@@ -311,9 +311,9 @@ function PendingTab({
   if (accounts.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-20 text-center">
-        <div className="flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
+        <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#DEF2E9]">
           <svg
-            className="h-8 w-8 text-green-600"
+            className="h-8 w-8 text-[#0E8F6B]"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -322,10 +322,10 @@ function PendingTab({
             <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        <h3 className="mt-4 text-lg font-medium text-gray-900">
+        <h3 className="mt-4 text-lg font-medium text-[#1C1424]">
           No accounts awaiting verification
         </h3>
-        <p className="mt-1 text-sm text-gray-500">All caught up.</p>
+        <p className="mt-1 text-sm text-[#5B4F62]">All caught up.</p>
       </div>
     );
   }
@@ -338,25 +338,25 @@ function PendingTab({
         return (
           <div
             key={account.id}
-            className="overflow-hidden rounded-lg border border-gray-200 bg-white p-4 shadow-sm"
+            className="overflow-hidden rounded-2xl border border-[#E8DDE4] bg-white p-4 shadow-[0_1px_3px_rgba(28,20,36,0.08)]"
           >
             <div className="flex items-start justify-between gap-2">
               <div>
-                <h3 className="text-base font-semibold text-gray-900">
+                <h3 className="text-base font-semibold text-[#1C1424]">
                   {ownerName(account)}
                 </h3>
                 {account.user.email && (
-                  <p className="text-xs text-gray-500">{account.user.email}</p>
+                  <p className="text-xs text-[#5B4F62]">{account.user.email}</p>
                 )}
               </div>
-              <span className="shrink-0 rounded-full bg-yellow-100 px-2 py-0.5 text-xs font-medium text-yellow-800">
+              <span className="shrink-0 rounded-full bg-[#FFF0D4] px-2 py-0.5 text-xs font-medium text-[#DE8E0F]">
                 {TYPE_LABELS[account.type]}
               </span>
             </div>
 
             <AccountDetails account={account} />
 
-            <p className="mt-2 text-xs text-gray-400">
+            <p className="mt-2 text-xs text-[#5B4F62]/60">
               Submitted {formatDate(account.createdAt)}
             </p>
 
@@ -364,7 +364,7 @@ function PendingTab({
               <button
                 onClick={() => onVerify(account)}
                 disabled={verifying || rejecting}
-                className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-md bg-green-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-green-700 disabled:opacity-60"
+                className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-[999px] bg-[#0E8F6B] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[#0A6E52] disabled:opacity-60"
               >
                 {verifying ? (
                   <>
@@ -378,7 +378,7 @@ function PendingTab({
               <button
                 onClick={() => onReject(account)}
                 disabled={verifying || rejecting}
-                className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-md bg-red-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-red-700 disabled:opacity-60"
+                className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-[999px] bg-red-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-red-700 disabled:opacity-60"
               >
                 {rejecting ? (
                   <>
@@ -415,7 +415,7 @@ function AllTab({
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <Spinner className="h-8 w-8 text-indigo-600" />
+        <Spinner className="h-8 w-8 text-[#D6336C]" />
       </div>
     );
   }
@@ -425,7 +425,7 @@ function AllTab({
         <p className="text-sm text-red-600">{error}</p>
         <button
           onClick={onRetry}
-          className="mt-3 rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700"
+          className="mt-3 rounded-[999px] bg-[#D6336C] px-4 py-2 text-sm font-medium text-white hover:bg-[#B71F56]"
         >
           Retry
         </button>
@@ -435,22 +435,22 @@ function AllTab({
   if (accounts.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-20 text-center">
-        <h3 className="text-lg font-medium text-gray-900">No payout accounts</h3>
+        <h3 className="text-lg font-medium text-[#1C1424]">No payout accounts</h3>
       </div>
     );
   }
 
   return (
-    <div className="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
+    <div className="overflow-hidden rounded-2xl border border-[#E8DDE4] bg-white shadow-[0_1px_3px_rgba(28,20,36,0.08)]">
       <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
+        <table className="min-w-full divide-y divide-[#E8DDE4]">
+          <thead className="bg-[#FFFCF6]">
             <tr>
               {["Owner", "Type", "Account title", "Destination", "Status", "Created"].map(
                 (h) => (
                   <th
                     key={h}
-                    className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
+                    className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-[#5B4F62]"
                   >
                     {h}
                   </th>
@@ -458,19 +458,19 @@ function AllTab({
               )}
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-200 bg-white">
+          <tbody className="divide-y divide-[#E8DDE4] bg-white">
             {accounts.map((a) => (
-              <tr key={a.id} className="hover:bg-gray-50">
-                <td className="px-4 py-3 text-sm font-medium text-gray-900">
+              <tr key={a.id} className="hover:bg-[#faf4f0]">
+                <td className="px-4 py-3 text-sm font-medium text-[#1C1424]">
                   {ownerName(a)}
                 </td>
-                <td className="whitespace-nowrap px-4 py-3 text-sm text-gray-500">
+                <td className="whitespace-nowrap px-4 py-3 text-sm text-[#5B4F62]">
                   {TYPE_LABELS[a.type]}
                 </td>
-                <td className="px-4 py-3 text-sm text-gray-500">
+                <td className="px-4 py-3 text-sm text-[#5B4F62]">
                   {a.accountTitle}
                 </td>
-                <td className="px-4 py-3 font-mono text-xs text-gray-500">
+                <td className="px-4 py-3 font-mono text-xs text-[#5B4F62]">
                   {a.type === PayoutAccountType.BANK
                     ? a.iban || "—"
                     : a.walletPhone || "—"}
@@ -482,7 +482,7 @@ function AllTab({
                     {a.status}
                   </span>
                 </td>
-                <td className="whitespace-nowrap px-4 py-3 text-sm text-gray-500">
+                <td className="whitespace-nowrap px-4 py-3 text-sm text-[#5B4F62]">
                   {formatDate(a.createdAt)}
                 </td>
               </tr>

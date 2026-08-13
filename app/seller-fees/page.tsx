@@ -66,14 +66,14 @@ export default function SellerFeesPage() {
     <div>
       <div className="mb-6 flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Seller Fee Approvals</h1>
-          <p className="mt-1 text-sm text-gray-500">
+          <h1 className="text-2xl font-bold text-[#1C1424] font-[family-name:var(--font-headline)]">Seller Fee Approvals</h1>
+          <p className="mt-1 text-sm text-[#5B4F62]">
             Review payment proof screenshots and activate seller accounts.
           </p>
         </div>
         <button
           onClick={load}
-          className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+          className="rounded-[999px] border border-[#E8DDE4] bg-white px-4 py-2 text-sm font-medium text-[#1C1424] hover:bg-[#faf4f0]"
         >
           Refresh
         </button>
@@ -90,7 +90,7 @@ export default function SellerFeesPage() {
         </div>
       ) : (
         <div className="space-y-4">
-          <p className="text-sm text-gray-500">{users.length} seller{users.length !== 1 ? "s" : ""} awaiting approval</p>
+          <p className="text-sm text-[#5B4F62]">{users.length} seller{users.length !== 1 ? "s" : ""} awaiting approval</p>
           {users.map((user) => {
             const isBusy = actionInFlight === user.id;
             const displayName = user.fullName || user.name || user.email || user.id.slice(0, 8);
@@ -99,9 +99,9 @@ export default function SellerFeesPage() {
               : "Unknown";
 
             return (
-              <div key={user.id} className="flex flex-col gap-4 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm sm:flex-row">
+              <div key={user.id} className="flex flex-col gap-4 rounded-2xl border border-[#E8DDE4] bg-white p-5 shadow-[0_1px_3px_rgba(28,20,36,0.08)] sm:flex-row">
                 {/* Proof screenshot */}
-                <div className="relative h-40 w-32 shrink-0 overflow-hidden rounded-xl bg-gray-50">
+                <div className="relative h-40 w-32 shrink-0 overflow-hidden rounded-xl bg-[#FFFCF6]">
                   {user.sellerFeeProofUrl ? (
                     <Image
                       src={user.sellerFeeProofUrl}
@@ -111,7 +111,7 @@ export default function SellerFeesPage() {
                       unoptimized
                     />
                   ) : (
-                    <div className="flex h-full w-full items-center justify-center text-gray-300 text-sm">
+                    <div className="flex h-full w-full items-center justify-center text-[#E8DDE4] text-sm">
                       No image
                     </div>
                   )}
@@ -120,15 +120,15 @@ export default function SellerFeesPage() {
                 {/* Info */}
                 <div className="flex flex-1 flex-col justify-between">
                   <div>
-                    <p className="text-base font-semibold text-gray-900">{displayName}</p>
-                    {user.email && <p className="mt-0.5 text-sm text-gray-500">{user.email}</p>}
-                    <p className="mt-1 text-sm text-gray-400">Paid: {paidDate}</p>
+                    <p className="text-base font-semibold text-[#1C1424]">{displayName}</p>
+                    {user.email && <p className="mt-0.5 text-sm text-[#5B4F62]">{user.email}</p>}
+                    <p className="mt-1 text-sm text-[#5B4F62]/60">Paid: {paidDate}</p>
                     {user.sellerFeeProofUrl && (
                       <a
                         href={user.sellerFeeProofUrl}
                         target="_blank"
                         rel="noreferrer"
-                        className="mt-1 inline-block text-sm text-indigo-600 underline hover:text-indigo-800"
+                        className="mt-1 inline-block text-sm text-[#D6336C] underline hover:text-[#B71F56]"
                       >
                         View full screenshot ↗
                       </a>
@@ -139,14 +139,14 @@ export default function SellerFeesPage() {
                     <button
                       onClick={() => handleApprove(user.id)}
                       disabled={isBusy}
-                      className="flex-1 rounded-lg bg-green-600 px-4 py-2 text-sm font-semibold text-white hover:bg-green-700 disabled:opacity-50"
+                      className="flex-1 rounded-[999px] bg-[#0E8F6B] px-4 py-2 text-sm font-semibold text-white hover:bg-[#0A6E52] disabled:opacity-50"
                     >
                       {isBusy ? "…" : "✓ Approve"}
                     </button>
                     <button
                       onClick={() => handleReject(user.id)}
                       disabled={isBusy}
-                      className="flex-1 rounded-lg border border-red-200 bg-red-50 px-4 py-2 text-sm font-semibold text-red-600 hover:bg-red-100 disabled:opacity-50"
+                      className="flex-1 rounded-[999px] border border-red-200 bg-red-50 px-4 py-2 text-sm font-semibold text-red-600 hover:bg-red-100 disabled:opacity-50"
                     >
                       {isBusy ? "…" : "✕ Reject"}
                     </button>

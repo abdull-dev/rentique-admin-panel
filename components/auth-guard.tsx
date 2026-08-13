@@ -56,10 +56,10 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
 
   if (state === "loading") {
     return (
-      <div className="flex h-screen w-screen items-center justify-center bg-white">
+      <div className="flex h-screen w-screen items-center justify-center bg-[#FFFCF6]">
         <div className="flex flex-col items-center gap-3">
-          <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-200 border-t-indigo-600" />
-          <p className="text-sm text-gray-500">Loading...</p>
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#E8DDE4] border-t-[#D6336C]" />
+          <p className="text-sm text-[#5B4F62]">Loading...</p>
         </div>
       </div>
     );
@@ -67,11 +67,11 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
 
   if (state === "unauthenticated") {
     return (
-      <div className="flex h-screen w-screen items-center justify-center bg-gray-50">
-        <div className="w-full max-w-sm rounded-xl border border-gray-200 bg-white p-8 shadow-sm">
+      <div className="flex h-screen w-screen items-center justify-center bg-[#FFFCF6]">
+        <div className="w-full max-w-sm rounded-2xl border border-[#E8DDE4] bg-white p-8 shadow-sm">
           <div className="mb-6 text-center">
-            <h1 className="text-2xl font-bold text-gray-900">Dresso.io Admin</h1>
-            <p className="mt-2 text-sm text-gray-600">
+            <h1 className="text-2xl font-bold text-[#1C1424] font-[family-name:var(--font-headline)]">Dresso.io Admin</h1>
+            <p className="mt-2 text-sm text-[#5B4F62]">
               Sign in to access the admin dashboard
             </p>
           </div>
@@ -80,7 +80,7 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
             <div>
               <label
                 htmlFor="email"
-                className="mb-1 block text-sm font-medium text-gray-700"
+                className="mb-1 block text-sm font-medium text-[#1C1424]"
               >
                 Email
               </label>
@@ -90,7 +90,7 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 placeholder-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                className="w-full rounded-lg border border-[#E8DDE4] px-3 py-2 text-sm text-[#1C1424] placeholder-[#5B4F62]/60 focus:border-[#D6336C] focus:outline-none focus:ring-1 focus:ring-[#D6336C]"
                 placeholder="admin@dresso.io"
               />
             </div>
@@ -98,7 +98,7 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
             <div>
               <label
                 htmlFor="password"
-                className="mb-1 block text-sm font-medium text-gray-700"
+                className="mb-1 block text-sm font-medium text-[#1C1424]"
               >
                 Password
               </label>
@@ -108,7 +108,7 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 placeholder-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                className="w-full rounded-lg border border-[#E8DDE4] px-3 py-2 text-sm text-[#1C1424] placeholder-[#5B4F62]/60 focus:border-[#D6336C] focus:outline-none focus:ring-1 focus:ring-[#D6336C]"
                 placeholder="••••••••"
               />
             </div>
@@ -120,7 +120,7 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
             <button
               type="submit"
               disabled={loggingIn}
-              className="w-full rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-indigo-700 disabled:opacity-50"
+              className="w-full rounded-[999px] bg-[#D6336C] px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[#B71F56] disabled:opacity-50"
             >
               {loggingIn ? "Signing in..." : "Sign in"}
             </button>
@@ -132,7 +132,7 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
 
   if (state === "denied") {
     return (
-      <div className="flex h-screen w-screen items-center justify-center bg-white">
+      <div className="flex h-screen w-screen items-center justify-center bg-[#FFFCF6]">
         <div className="text-center">
           <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-red-100">
             <svg
@@ -149,14 +149,14 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
               />
             </svg>
           </div>
-          <h1 className="text-2xl font-semibold text-gray-900">
+          <h1 className="text-2xl font-semibold text-[#1C1424]">
             Access Denied
           </h1>
-          <p className="mt-2 text-gray-600">
+          <p className="mt-2 text-[#5B4F62]">
             You do not have admin or moderator privileges.
           </p>
           {profile && (
-            <p className="mt-1 text-sm text-gray-400">
+            <p className="mt-1 text-sm text-[#5B4F62]/60">
               Signed in as {profile.email ?? profile.name ?? profile.id}
             </p>
           )}

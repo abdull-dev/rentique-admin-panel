@@ -19,7 +19,7 @@ interface StatCard {
 
 function StatSkeleton() {
   return (
-    <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+    <div className="rounded-2xl border border-[#E8DDE4] bg-white p-6 shadow-[0_1px_3px_rgba(28,20,36,0.08)]">
       <div className="flex items-center gap-4">
         <div className="skeleton h-12 w-12 rounded-lg" />
         <div className="flex-1">
@@ -114,21 +114,21 @@ export default function DashboardPage() {
       label: "Total Listings",
       value: null,
       icon: icons.listings,
-      color: "bg-blue-50 text-blue-600",
+      color: "bg-[#FCE3ED] text-[#D6336C]",
       href: "/listings",
     },
     {
       label: "Pending Review",
       value: null,
       icon: icons.pending,
-      color: "bg-amber-50 text-amber-600",
+      color: "bg-[#FFF0D4] text-[#DE8E0F]",
       href: "/listings",
     },
     {
       label: "Total Bookings",
       value: null,
       icon: icons.bookings,
-      color: "bg-green-50 text-green-600",
+      color: "bg-[#DEF2E9] text-[#0E8F6B]",
       href: "/bookings",
     },
     {
@@ -205,8 +205,8 @@ export default function DashboardPage() {
     <div>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-        <p className="mt-1 text-sm text-gray-600">
+        <h1 className="text-2xl font-bold text-[#1C1424] font-[family-name:var(--font-headline)]">Dashboard</h1>
+        <p className="mt-1 text-sm text-[#5B4F62]">
           Overview of your rental marketplace
         </p>
       </div>
@@ -220,7 +220,7 @@ export default function DashboardPage() {
             <Link
               key={card.label}
               href={card.href}
-              className="group rounded-xl border border-gray-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md"
+              className="group rounded-2xl border border-[#E8DDE4] bg-white p-6 shadow-[0_1px_3px_rgba(28,20,36,0.08)] transition-shadow hover:shadow-md"
             >
               <div className="flex items-center gap-4">
                 <div
@@ -229,10 +229,10 @@ export default function DashboardPage() {
                   {card.icon}
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-gray-900">
+                  <p className="text-2xl font-bold text-[#1C1424]">
                     {card.value.toLocaleString()}
                   </p>
-                  <p className="text-sm text-gray-500">{card.label}</p>
+                  <p className="text-sm text-[#5B4F62]">{card.label}</p>
                 </div>
               </div>
             </Link>
@@ -243,14 +243,14 @@ export default function DashboardPage() {
       {/* Tables grid */}
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         {/* Pending listings */}
-        <div className="rounded-xl border border-gray-200 bg-white shadow-sm">
-          <div className="flex items-center justify-between border-b border-gray-200 px-6 py-4">
-            <h2 className="text-lg font-semibold text-gray-900">
+        <div className="rounded-2xl border border-[#E8DDE4] bg-white shadow-[0_1px_3px_rgba(28,20,36,0.08)]">
+          <div className="flex items-center justify-between border-b border-[#E8DDE4] px-6 py-4">
+            <h2 className="text-lg font-semibold text-[#1C1424]">
               Pending Listings
             </h2>
             <Link
               href="/listings"
-              className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
+              className="text-sm font-medium text-[#D6336C] hover:text-[#B71F56]"
             >
               View all
             </Link>
@@ -259,13 +259,13 @@ export default function DashboardPage() {
             {pendingListings === null ? (
               <TableSkeleton />
             ) : pendingListings.length === 0 ? (
-              <p className="py-8 text-center text-sm text-gray-400">
+              <p className="py-8 text-center text-sm text-[#5B4F62]/60">
                 No pending listings
               </p>
             ) : (
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-gray-100 text-left text-gray-500">
+                  <tr className="border-b border-[#E8DDE4] text-left text-[#5B4F62]">
                     <th className="pb-3 font-medium">Title</th>
                     <th className="pb-3 font-medium">Price</th>
                     <th className="pb-3 font-medium">Date</th>
@@ -275,15 +275,15 @@ export default function DashboardPage() {
                   {pendingListings.map((listing, i) => (
                     <tr
                       key={listing.id}
-                      className={`${i % 2 === 1 ? "bg-gray-50" : ""} border-b border-gray-50`}
+                      className={`${i % 2 === 1 ? "bg-[#faf4f0]" : ""} border-b border-[#E8DDE4]`}
                     >
-                      <td className="py-3 font-medium text-gray-900">
+                      <td className="py-3 font-medium text-[#1C1424]">
                         {listing.title}
                       </td>
-                      <td className="py-3 text-gray-600">
+                      <td className="py-3 text-[#5B4F62]">
                         Rs {Number(listing.rentalPrice).toLocaleString()}
                       </td>
-                      <td className="py-3 text-gray-400">
+                      <td className="py-3 text-[#5B4F62]/60">
                         {new Date(listing.createdAt).toLocaleDateString()}
                       </td>
                     </tr>
@@ -295,14 +295,14 @@ export default function DashboardPage() {
         </div>
 
         {/* Disputed bookings */}
-        <div className="rounded-xl border border-gray-200 bg-white shadow-sm">
-          <div className="flex items-center justify-between border-b border-gray-200 px-6 py-4">
-            <h2 className="text-lg font-semibold text-gray-900">
+        <div className="rounded-2xl border border-[#E8DDE4] bg-white shadow-[0_1px_3px_rgba(28,20,36,0.08)]">
+          <div className="flex items-center justify-between border-b border-[#E8DDE4] px-6 py-4">
+            <h2 className="text-lg font-semibold text-[#1C1424]">
               Disputed Bookings
             </h2>
             <Link
               href="/bookings"
-              className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
+              className="text-sm font-medium text-[#D6336C] hover:text-[#B71F56]"
             >
               View all
             </Link>
@@ -311,13 +311,13 @@ export default function DashboardPage() {
             {disputedBookings === null ? (
               <TableSkeleton />
             ) : disputedBookings.length === 0 ? (
-              <p className="py-8 text-center text-sm text-gray-400">
+              <p className="py-8 text-center text-sm text-[#5B4F62]/60">
                 No disputed bookings
               </p>
             ) : (
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-gray-100 text-left text-gray-500">
+                  <tr className="border-b border-[#E8DDE4] text-left text-[#5B4F62]">
                     <th className="pb-3 font-medium">Listing</th>
                     <th className="pb-3 font-medium">Amount</th>
                     <th className="pb-3 font-medium">Date</th>
@@ -327,15 +327,15 @@ export default function DashboardPage() {
                   {disputedBookings.map((booking, i) => (
                     <tr
                       key={booking.id}
-                      className={`${i % 2 === 1 ? "bg-gray-50" : ""} border-b border-gray-50`}
+                      className={`${i % 2 === 1 ? "bg-[#faf4f0]" : ""} border-b border-[#E8DDE4]`}
                     >
-                      <td className="py-3 font-medium text-gray-900">
+                      <td className="py-3 font-medium text-[#1C1424]">
                         {booking.listing?.title ?? booking.listingId.slice(0, 8)}
                       </td>
-                      <td className="py-3 text-gray-600">
+                      <td className="py-3 text-[#5B4F62]">
                         Rs {Number(booking.rentalAmount).toLocaleString()}
                       </td>
-                      <td className="py-3 text-gray-400">
+                      <td className="py-3 text-[#5B4F62]/60">
                         {new Date(booking.createdAt).toLocaleDateString()}
                       </td>
                     </tr>
@@ -349,41 +349,41 @@ export default function DashboardPage() {
 
       {/* Quick actions */}
       <div className="mt-8">
-        <h2 className="mb-4 text-lg font-semibold text-gray-900">
+        <h2 className="mb-4 text-lg font-semibold text-[#1C1424]">
           Quick Actions
         </h2>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           <Link
             href="/listings"
-            className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm transition-shadow hover:shadow-md"
+            className="rounded-2xl border border-[#E8DDE4] bg-white p-5 shadow-[0_1px_3px_rgba(28,20,36,0.08)] transition-shadow hover:shadow-md"
           >
-            <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50 text-blue-600">
+            <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-[#FCE3ED] text-[#D6336C]">
               {icons.listings}
             </div>
-            <h3 className="font-semibold text-gray-900">Manage Listings</h3>
-            <p className="mt-1 text-sm text-gray-500">
+            <h3 className="font-semibold text-[#1C1424]">Manage Listings</h3>
+            <p className="mt-1 text-sm text-[#5B4F62]">
               Review, approve, or reject listings
             </p>
           </Link>
 
           <Link
             href="/bookings"
-            className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm transition-shadow hover:shadow-md"
+            className="rounded-2xl border border-[#E8DDE4] bg-white p-5 shadow-[0_1px_3px_rgba(28,20,36,0.08)] transition-shadow hover:shadow-md"
           >
-            <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-green-50 text-green-600">
+            <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-[#DEF2E9] text-[#0E8F6B]">
               {icons.bookings}
             </div>
-            <h3 className="font-semibold text-gray-900">Manage Bookings</h3>
-            <p className="mt-1 text-sm text-gray-500">
+            <h3 className="font-semibold text-[#1C1424]">Manage Bookings</h3>
+            <p className="mt-1 text-sm text-[#5B4F62]">
               View all bookings and resolve disputes
             </p>
           </Link>
 
           <Link
             href="/users"
-            className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm transition-shadow hover:shadow-md"
+            className="rounded-2xl border border-[#E8DDE4] bg-white p-5 shadow-[0_1px_3px_rgba(28,20,36,0.08)] transition-shadow hover:shadow-md"
           >
-            <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-purple-50 text-purple-600">
+            <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-[#EAE1EE] text-[#4A2E57]">
               <svg
                 className="h-6 w-6"
                 fill="none"
@@ -398,8 +398,8 @@ export default function DashboardPage() {
                 />
               </svg>
             </div>
-            <h3 className="font-semibold text-gray-900">Manage Users</h3>
-            <p className="mt-1 text-sm text-gray-500">
+            <h3 className="font-semibold text-[#1C1424]">Manage Users</h3>
+            <p className="mt-1 text-sm text-[#5B4F62]">
               View user profiles and manage roles
             </p>
           </Link>
